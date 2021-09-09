@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/', function () {
+    // return view('welcome');
+    return array("code"=>400,"status"=>"OK");
+});
+
