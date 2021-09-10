@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,8 +25,6 @@ Route::post('/test', function (Request $request) {
     return array("code" => 400, "status" => "OK");
 });
 
-Route::prefix('vue3learning/v1/')->group(function () {
-    Route::any('test', function () {
-        return 1;
-    });
+Route::prefix('vue3learning/v1')->group(function () {
+    Route::post('signup', [UsersController::class, 'signup']);
 });
