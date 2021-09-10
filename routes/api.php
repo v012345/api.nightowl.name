@@ -18,8 +18,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/', function () {
+Route::post('/test', function (Request $request) {
     // return view('welcome');
-    return array("code"=>400,"status"=>"OK");
+    // return $request->method();
+    return array("code" => 400, "status" => "OK");
 });
 
+Route::prefix('vue3learning/v1/')->group(function () {
+    Route::any('test', function () {
+        return 1;
+    });
+});
