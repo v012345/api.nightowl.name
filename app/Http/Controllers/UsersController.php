@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -10,45 +11,39 @@ class UsersController extends Controller
     //
     public function signup(Request $request)
     {
-        // return date('D d M Y H:i:s', time());
-        // $this->validate($request, [
-        //     'name' => 'required|unique:users|max:50',
-        //     'phone_number' => 'required|unique:users|max:255',
-        //     'password' => 'required|confirmed|min:6'
-        // ]);
-        $user = User::create([
-            'name' => $request->name,
-            'phone_number' => $request->phone_number,
-            'password' => bcrypt($request->password),
-        ]);
+        try {
+            $user = User::create($request->all());
+        } catch (Exception $e) {
+            return array('code' => 400, 'msg' => $e->getMessage(), 'user' => $request->all());
+        }
         return array('code' => 200, 'msg' => 'Signup successfully', 'user' => $user);
+    }
+
+    public function login(Request $request)
+    {
+        $user = (User::where(["phone_number" => $request->phone_number, "password" => $request->password])->get())->first();
+        if ($user) {
+            return array('code' => 200, 'msg' => 'Signup successfully', 'user' => $user);
+        }
+        return array('code' => 400, 'msg' => 'Account doesn\'t match password');
+    }
+
+    public function logout(Request $request)
+    {
     }
 
     public function profile(Request $request)
     {
-        // return gettype($request->id);
-        $user = User::find($request->id);
-        if ($user) {
-            return  array('code' => 200, 'msg' => 'OK', 'user' => $user);
-        } else {
-            return  array('code' => 404, 'msg' => 'User doesn\'t exist');
-        }
+        return  array('code' => 200, 'msg' => 'User profile', 'user' => $request->user);
     }
 
-    public function profileSet(Request $request)
+    public function setProfile(Request $request)
     {
-        $user = User::find($request->id);
-        if (!$user) {
-            return  array('code' => 404, 'msg' => 'User doesn\'t exist');
-        } else {
-            $user->name = $request->name;
-            $user->save();
-            // dd( $user);
-
-            // $user->makeVisible('password');
-            // $user->update(['name'=>"aifeihgii"]);
-            return array('code' => 200, 'msg' => 'OK', 'user' => $user);
-        }
+        $user = User::find($request->user->id);
+        $user->update($request->all());
+        // $user->makeVisible('password');
+        // $user->update(['name'=>"aifeihgii"]);
+        return array('code' => 200, 'msg' => 'OK', 'user' => $user);
     }
     public function orders(Request $request)
     {
