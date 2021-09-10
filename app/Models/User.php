@@ -23,7 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'phone_number',
-        'verifying_code',
+        'avatar',
+
     ];
 
     /**
@@ -34,6 +35,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'verifying_code',
     ];
 
     /**
@@ -53,8 +55,14 @@ class User extends Authenticatable
      * @param  \DateTimeInterface  $date
      * @return string
      */
-    public function serializeDate(DateTimeInterface $date)
+    protected function serializeDate(DateTimeInterface $date)
     {
-        return $date->format($this->dateFormat ?: 'Y-m-d H:i:s');
+        return $date->format('Y-m-d H:i:s');
+    }
+
+    public function orders()
+    {
+        // dd($this);
+        return $this->name . " has no order";
     }
 }

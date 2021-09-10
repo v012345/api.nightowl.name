@@ -26,5 +26,11 @@ Route::post('/test', function (Request $request) {
 });
 
 Route::prefix('vue3learning/v1')->group(function () {
-    Route::post('signup', [UsersController::class, 'signup']);
+    
+    Route::prefix('user')->group(function () {
+        Route::post('signup', [UsersController::class, 'signup']);
+        Route::post('profile', [UsersController::class, 'profile']);
+        Route::post('profile/set', [UsersController::class, 'profileSet']);
+        Route::post('orders', [UsersController::class, 'orders']);
+    });
 });
