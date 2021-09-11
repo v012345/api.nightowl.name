@@ -22,28 +22,39 @@ class DecryptUserInfo
     {
         // $user = $request->user;
         if (!$request->token) {
-            return response(array("code" => 400, "msg" => "Miss token",));
+            return response(array("code" => 400, "msg" => "Miss token (from DecryptUserInfo)",));
         }
         // dd(gettype($user));
         // $user["login"] = true;
         // $request->decrypted = true;
         try {
-            $user = Crypt::decrypt($request->token);
+            $token = Crypt::decrypt($request->token);
         } catch (DecryptException $e) {
-            return response(array("code" => 400, "msg" => $e->getMessage()));
+            return response(array("code" => 400, "msg" => $e->getMessage() . " (from DecryptUserInfo)"));
         }
 
-        $minutes = (new Carbon())->diffInMinutes(Carbon::parse($user->updated_at));
+        if ($token->session->version != getenv("APP_VERSION")) {
+            return response(array("code" => 400, "msg" => "Low app version (from DecryptUserInfo)"));
+        }
 
-        if ($minutes > 240) {
-            return response(array("code" => 400, "msg" => "Token expired"));
+        if ($token->session->remember_me) {
+            $lifeTime = 43200;
+        } else {
+            $lifeTime = 120;
         }
-        if ($minutes > 120) {
-            $user = User::find($user->id);
-            $user->touch();
+
+        $minutes = (new Carbon())->diffInMinutes(Carbon::parse($token->session->updated_at));
+
+        if ($minutes > $lifeTime) {
+            return response(array("code" => 400, "msg" => "Token expired (from DecryptUserInfo)"));
         }
-        // dd($minutes);
-        $request->merge(['user' => $user]);
+        // if ($minutes > 120) {
+        //     $user = User::find($user->id);
+        //     $user->touch();
+        // }
+        $token->session->updated_at = date("Y-m-d H:i:s", time());
+        $request->merge(['user' => $token->user]);
+        $request->merge(['session' => $token->session]);
         return $next($request);
     }
 }

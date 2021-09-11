@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'EncryptUserInfo' => \App\Http\Middleware\EncryptUserInfo::class,
         'DecryptUserInfo' => \App\Http\Middleware\DecryptUserInfo::class,
+        'ValidateUserInfo' => \App\Http\Middleware\ValidateUserInfo::class,
     ];
 
     /**
@@ -76,5 +77,6 @@ class Kernel extends HttpKernel
      */
     protected $middlewarePriority = [
         \App\Http\Middleware\DecryptUserInfo::class,
+        \App\Http\Middleware\ValidateUserInfo::class,
     ];
 }
