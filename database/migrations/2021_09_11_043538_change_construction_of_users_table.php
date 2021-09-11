@@ -20,7 +20,7 @@ class ChangeConstructionOfUsersTable extends Migration
             $table->string('phone_number')->unique()->index();
             // $table->string('verifying_code', 4)->default("0000");
             $table->string('email')->index()->nullable()->change();
-            $table->boolean("remember_token")->nullable(false)->default(false)->change();
+            $table->boolean("admin")->nullable(false)->default(false);
         });
     }
 
@@ -39,7 +39,7 @@ class ChangeConstructionOfUsersTable extends Migration
             // $table->dropColumn("verifying_code");
             $table->dropIndex(["email"]);
             $table->string('email')->nullable(false)->change();
-            $table->rememberToken()->default(null)->change();
+            // $table->rememberToken()->default(null)->change();
         });
     }
 }

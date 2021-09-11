@@ -79,20 +79,12 @@ class UsersController extends Controller
         // $user->update(['name'=>"aifeihgii"]);
         return array('code' => 200, 'msg' => 'Set profile successfully', 'user' => $user, "session" => $session);
     }
-    public function orders(Request $request)
-    {
-        $session = $request->session;
-        $user = User::find($request->user->id);
-        if (!$user) {
-            return  array('code' => 404, 'msg' => 'User doesn\'t exist');
-        } else {
-            return array('code' => 200, 'msg' => $user->orders(), 'user' => $user, "session" => $session);
-        }
-    }
+
 
     public function getAllUsers(Request $request)
     {
         //http://api.localhost/api/vue3learning/v1/get/users?page=2
+        // dump("dddddddddddd");
         $data = User::paginate(intval($request->per_page));
         return array("code" => 200, "msg" => "OK (from getAllUsers)", "data" => $data);
     }

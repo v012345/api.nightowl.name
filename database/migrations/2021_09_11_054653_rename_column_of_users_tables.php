@@ -15,7 +15,7 @@ class RenameColumnOfUsersTables extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->renameColumn("remember_token","admin");
+            // $table->renameColumn("remember_token","admin");
         });
     }
 
@@ -28,7 +28,7 @@ class RenameColumnOfUsersTables extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->renameColumn("admin","remember_token");
+            // $table->renameColumn("admin","remember_token");
         });
     }
 }

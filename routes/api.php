@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UsersController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,10 +20,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/test', function (Request $request) {
+Route::get('/test', function (Request $request) {
     // return view('welcome');
     // return $request->method();
-    return array("code" => 400, "status" => "OK");
+    // $user = new User();
+    // dump($user);
+    // $user->password = "123";
+    // $user->name = "123";
+    // $user->phone_number = "362qq781";
+    // dump($user);
+    // $user->save();
+    $user = User::create();
+    dump($user);
+    return array("code" => 200, "status" => "OK");
 });
 
 Route::prefix('vue3learning/v1')->group(function () {
@@ -34,7 +44,6 @@ Route::prefix('vue3learning/v1')->group(function () {
         Route::post("delete", [UsersController::class, "delete"])->withoutMiddleware(["EncryptUserInfo"]);
         Route::post('profile', [UsersController::class, 'profile']);
         Route::post('set/profile', [UsersController::class, 'setProfile']);
-        Route::post('orders', [UsersController::class, 'orders']);
     });
 });
 
