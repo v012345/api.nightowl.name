@@ -44,6 +44,10 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+        'token' => [
+            \App\Http\Middleware\GenerateToken::class,
+            \App\Http\Middleware\VerifyToken::class,
+        ],
     ];
 
     /**
@@ -63,9 +67,11 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'EncryptUserInfo' => \App\Http\Middleware\EncryptUserInfo::class,
-        'DecryptUserInfo' => \App\Http\Middleware\DecryptUserInfo::class,
+        // 'EncryptUserInfo' => \App\Http\Middleware\EncryptUserInfo::class,
+        // 'DecryptUserInfo' => \App\Http\Middleware\DecryptUserInfo::class,
         'ValidateUserInfo' => \App\Http\Middleware\ValidateUserInfo::class,
+        'VerifyToken' => \App\Http\Middleware\VerifyToken::class,
+        'GenerateToken' => \App\Http\Middleware\GenerateToken::class,
     ];
 
     /**
@@ -76,7 +82,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewarePriority = [
-        \App\Http\Middleware\DecryptUserInfo::class,
+        // \App\Http\Middleware\DecryptUserInfo::class,
+        \App\Http\Middleware\VerifyToken::class,
         \App\Http\Middleware\ValidateUserInfo::class,
     ];
 }

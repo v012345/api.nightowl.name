@@ -16,9 +16,10 @@ class ChangeConstructionOfUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             //
             $table->string('avatar')->default("https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg")->comment("google copyright");
-            $table->string("country_code", 10)->default("86");
+            // $table->string("country_code", 10)->default("86");
+            $table->string("account")->nullable()->unique()->index();
             $table->string('phone_number')->unique()->index();
-            // $table->string('verifying_code', 4)->default("0000");
+            // $table->string('verifying_code', 4)->nullable();
             $table->string('email')->index()->nullable()->change();
             $table->boolean("admin")->nullable(false)->default(false);
         });
@@ -34,7 +35,8 @@ class ChangeConstructionOfUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             //
             $table->dropColumn('avatar');
-            $table->dropColumn('country_code');
+            $table->dropColumn("account");
+            // $table->dropColumn('country_code');
             $table->dropColumn("phone_number");
             // $table->dropColumn("verifying_code");
             $table->dropIndex(["email"]);

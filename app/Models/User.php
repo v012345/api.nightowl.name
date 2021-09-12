@@ -22,9 +22,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
-        'password',
-        'phone_number',
+        // 'email',
+        // 'password',
+        // 'phone_number',
         'avatar',
         // 'admin',
     ];
@@ -37,7 +37,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'email_verified_at', 'country_code',
         // 'remember_token',
-        // 'verifying_code',
+        'verifying_code',
     ];
 
     /**

@@ -5,12 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use stdClass;
 
 class UsersController extends Controller
 {
     //
-    public function verify(Request $request)
+
+    public function sendVerifyingCode(Request $request)
+    {
+        //do not verify the phone number
+        //use event to send code
+        $request->phone_number;
+        Redis::setex($request->phone_number, 60, random_int(1000, 9999));
+        return array("code" => 200, "msg" => "Has sent verifying code");
+    }
+
+    public function confirmVerifyingCode(Request $request)
     {
         $session = new stdClass();
         $user = new stdClass();
@@ -18,26 +29,12 @@ class UsersController extends Controller
         // $session = json_decode(json_encode($session));
         $session->phone_number = $request->phone_number;
         // $session->verifying_code =  random_int(1000, 9999);
+        //here send verifying code
         $session->verifying_code =  1111;
         $session->updated_at = date("Y-m-d H:i:s", time());
         $session->remember_me = false;
 
         return array('code' => 200, 'msg' => 'Has sent sms', 'user' => $user, 'session' => $session);
-    }
-    public function signup(Request $request)
-    {
-        try {
-            $session = $request->session;
-            $session->remember_me = $request->remember_me;
-            if ($request->verifying_code == $session->verifying_code) {
-                $user = User::create($request->all());
-            } else {
-                return array('code' => 400, 'msg' => "Wrong verifying code (from signup)",);
-            }
-        } catch (Exception $e) {
-            return array('code' => 400, 'msg' => $e->getMessage() . " (from signup)",);
-        }
-        return array('code' => 200, 'msg' => 'Sign up successfully (from signup)', 'user' => $user, "session" => $session);
     }
 
     public function login(Request $request)
