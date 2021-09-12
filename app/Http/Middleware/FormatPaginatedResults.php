@@ -17,7 +17,6 @@ class FormatPaginatedResults
      */
     public function handle(Request $request, Closure $next)
     {
-
         $response =  $next($request);
         $pagination = new stdClass();
         $data = $response->getData();

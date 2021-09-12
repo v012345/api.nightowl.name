@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DateTimeInterface;
 use Faker\Generator as Faker;
+use Faker\Provider\Uuid;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -22,12 +23,12 @@ class User extends Authenticatable implements JWTSubject
      * @var string[]
      */
     protected $fillable = [
-        'name',
-        // 'email',
-        // 'password',
-        // 'phone_number',
+        'nickname',
+        'email',
+        'password',
+        'phone_number',
         'avatar',
-        // 'admin',
+        'admin',
     ];
 
     /**
@@ -36,9 +37,9 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'email_verified_at', 'country_code',
-        // 'remember_token',
-        'verifying_code',
+        'password',
+        'email_verified_at',
+        'remember_token',
     ];
 
     /**
@@ -81,10 +82,8 @@ class User extends Authenticatable implements JWTSubject
             //     dump($count);
             //     exit;
             // }
-            $faker = app(Faker::class);
-            $user->name = $user->name ?? $faker->name();
-            $user->phone_number  =  $user->phone_number ?? $faker->unique()->phoneNumber();
-            $user->password  =  $user->password ?? $faker->password();
+            $user->nickname = $user->nickname ?? "用户_" . (app(Faker::class))->uuid();
+            $user->password  =  $user->password ?? "123456";
             // $user->save();
         });
     }

@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
         //
         User::factory()->count(50)->create();
         $user = User::find(1);
-        $user->phone_number = '1';
+        $user->phone_number = '15521224344';
         $user->admin = true;
         $user->save();
     }

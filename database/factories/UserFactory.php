@@ -31,11 +31,12 @@ class UserFactory extends Factory
         // ];
 
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'password' => '1',
+            'nickname' => $this->faker->name(),
+            'email' => $this->faker->unique()->email(),
+            'password' => '123456',
             'admin' => false,
             'phone_number' => $this->faker->unique()->phoneNumber(),
+            'account' => $this->faker->unique()->userName(),
         ];
     }
 
