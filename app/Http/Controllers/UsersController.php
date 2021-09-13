@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redis;
 use stdClass;
 
@@ -26,9 +29,9 @@ class UsersController extends Controller
         // $session->updated_at = date("Y-m-d H:i:s", time());
         // $session->remember_me = false;
 
-        $verifying_code = Redis::get($request->phone_number);
+        $verification_code = Redis::get($request->phone_number);
         // dd(gettype($verifying_code));
-        if ($verifying_code && $verifying_code == $request->verifying_code) {
+        if ($verification_code && $verification_code == $request->verification_code) {
             Redis::del($request->phone_number);
             try {
                 $user = User::create($request->all());
@@ -77,10 +80,51 @@ class UsersController extends Controller
         return array('code' => 400, 'msg' => 'Not an admin');
     }
 
-    public function profile(Request $request)
+    public function activateEmail(Request $request)
     {
-        $session = $request->session;
-        $user = User::find($request->user->id);
-        return  array('code' => 200, 'msg' => 'User profile', 'user' => $user, "session" => $session);
+
+        try {
+            $activation_token = Crypt::decrypt($request->activation_token);
+
+            // if ((new Carbon())->diffInMinutes(Carbon::parse($activation_token->created_at)) > 3) {
+            //     abort(403, "The email has expired, please resent a new email!");
+            // }
+            $user = User::find($activation_token->user->id);
+            $user->update(["email" => "vvoluptas@hotmail.com", "email_verified_at" => now()]);
+        } catch (DecryptException $e) {
+            abort(403, "Wrong activation token");
+        } catch (QueryException $e) {
+            abort(403, "The email has been used");
+        }
+        $redirectURL = preg_replace_callback("/\/+$/", function () {
+        }, $activation_token->redirectURL) . "/{$user->id}";
+
+
+
+
+        // return redirect($activation_token->redirectURL, 301);
+        return redirect()->away($redirectURL);
+    }
+
+    public function detail(Request $request)
+    {
+        $user = User::find($request->id);
+        return  array('code' => 200, 'msg' => 'User profile', 'user' => $user);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $verification_code = Redis::get($request->by);
+        if ($verification_code && $verification_code == $request->verification_code) {
+            Redis::del($request->by);
+            try {
+                $
+                $user = User::create($request->all());
+            } catch (QueryException $e) {
+                return array('code' => 400, 'msg' => 'Phone number has signed up');
+            }
+            return array('code' => 200, 'msg' => 'Has sent sms', 'user' => $user);
+        }
+        return array('code' => 400, 'msg' => 'Wrong verifying code');
     }
 }

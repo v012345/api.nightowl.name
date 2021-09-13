@@ -11,8 +11,8 @@
 <body>
     <h1>Verify your email</h1>
     <p> Click below url to verify your email address so we know it’s really you.</p>
-    <p> <a href="{{ route('verify_email', 1) }}">
-            {{ route('verify_email', 1) }}
+    <p> <a href="{{ route('activate_email', [$activation_token]) }}">
+            {{ route('activate_email', [$activation_token]) }}
         </a> </p>
     <p> (This email is sent automatically by the system, please do not reply.) </p>
 </body>

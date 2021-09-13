@@ -19,7 +19,6 @@ class ChangeConstructionOfUsersTable extends Migration
             // $table->string("country_code", 10)->default("86");
             $table->string("account")->nullable()->unique()->index();
             $table->string('phone_number')->unique()->index();
-            // $table->string('verifying_code', 4)->nullable();
             $table->string('email')->index()->change();
             $table->boolean("admin")->nullable(false)->default(false);
         });
@@ -38,7 +37,6 @@ class ChangeConstructionOfUsersTable extends Migration
             $table->dropColumn("account");
             // $table->dropColumn('country_code');
             $table->dropColumn("phone_number");
-            // $table->dropColumn("verifying_code");
             $table->dropIndex(["email"]);
             // $table->string('email')->nullable(false)->change();
             // $table->rememberToken()->default(null)->change();

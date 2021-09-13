@@ -33,7 +33,7 @@ Route::prefix('vue3learning/v1')->group(function () {
     Route::prefix('user')->middleware(["token", "ValidateUserInfo"])->group(function () {
 
 
-        Route::get('verify/email/{verifying_code}/{redirectURL}', [UsersController::class, 'verifyEmail'])->name("verify_email");
+        Route::get('verify/email/{verifying_code}/{redirectURL}', [UsersController::class, 'verifyEmail']);
 
         Route::post('login', [UsersController::class, "login"])->withoutMiddleware(["DecryptUserInfo", "ValidateUserInfo"]);
         Route::post("logout", [UsersController::class, "logout"])->withoutMiddleware(["EncryptUserInfo"]);
@@ -71,15 +71,16 @@ Route::prefix('vue3learning/v2')->group(function () {
         Route::post('logout', [UsersController::class, 'logout']);
         Route::post('update', [UsersController::class, 'update']);
         Route::post('delete', [UsersController::class, 'delete']);
+        Route::post('detail', [UsersController::class, 'detail']);
+        Route::post('reset/password', [UsersController::class, 'resetPassword']);
+        Route::get('activate/email/{activation_token}', [UsersController::class, 'activateEmail'])->name("activate_email");
     });
     Route::prefix('send')->group(function () {
-        Route::post('email/verify', [MessagesController::class, 'sendEmail']);
-        Route::post('phone/send_verifying_code', [MessagesController::class, 'sendVerifyingCode']);
+        Route::post('email/activation_token', [MessagesController::class, 'sendActivationToken']);
+        Route::post('phone/send_verification_code', [MessagesController::class, 'sendVerificationCode']);
+        Route::post('email/send_verification_code', [MessagesController::class, 'sendVerificationCode']);
     });
-    Route::prefix('send')->group(function () {
-        Route::post('email/verify', [MessagesController::class, 'sendEmail']);
-        Route::post('phone/send_verifying_code', [MessagesController::class, 'sendVerifyingCode']);
-    });
+
 
 
 

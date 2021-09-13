@@ -12,36 +12,45 @@ use stdClass;
 class MessagesController extends Controller
 {
     //
-    public function sendVerifyingCode(Request $request)
+    public function sendVerificationCode(Request $request)
     {
         //do not verify the phone number
         //use event to send code
-        if (!$request->phone_number)
-            return array("code" => 400, "msg" => "Phone number is missing.");
-        $request->phone_number;
-        Redis::setex($request->phone_number, 60, random_int(1000, 9999));
-        return array("code" => 200, "msg" => "Has sent verifying code.");
+        if ($request->is("*/phone/send_verification_code")) {
+            $to = $request->phone_number;
+            $by = "phone";
+        }
+        if ($request->is("*/email/send_verification_code")) {
+            $to = $request->email;
+            $by = "email";
+        }
+        if (!$to)
+            return array("code" => 400, "msg" => "Phone number or email adress is missing.");
+        $verification_code =  random_int(1000, 9999);
+        //event by to;
+        Redis::setex($to, 60, $verification_code);
+        return array("code" => 200, "msg" => "Has sent verification code.");
     }
-    public function sendEmail(Request $request)
+    public function sendActivationToken(Request $request)
     {
-        $data =  new stdClass();
+        $activation_token =  new stdClass();
         $user = new stdClass();
-        $user->id = $request->user->id;
+        $user->id = $request->id;
 
-        $to = $request->email ??  (User::find($request->user->id))->email;
-        $redirectURL = $request->redirectURL ?? "www.googel.com";
+        $to = $request->email ??  (User::find($request->id))->email;
+        $redirectURL = $request->redirectURL ?? "https://www.google.com/";
 
-        $data->user = $user;
-        $data->email = $to;
-        $data->redirectURL = $redirectURL;
-        $data->created_at = date("Y-m-d H:i:s", time());
-        $data = Crypt::encrypt($data);
+        $activation_token->user = $user;
+        $activation_token->email = $to;
+        $activation_token->redirectURL = $redirectURL;
+        $activation_token->created_at = date("Y-m-d H:i:s", time());
+        $activation_token = Crypt::encrypt($activation_token);
 
-        $view = 'email.verify';
+        $view = 'email.activate';
         $from = 'v012345@163.com';
         $name = "Meteor";
         $subject = "Thanks for your register, please verify your email account first";
-        Mail::send($view, compact('data'), function ($message) use ($from, $name, $to, $subject) {
+        Mail::send($view, compact('activation_token'), function ($message) use ($from, $name, $to, $subject) {
             $message->from($from, $name)->to($to)->subject($subject);
             // $message->from($from, $name);
             // $message->sender('john@johndoe.com', 'John Doe');

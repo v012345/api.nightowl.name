@@ -29,6 +29,7 @@ class User extends Authenticatable implements JWTSubject
         'phone_number',
         'avatar',
         'admin',
+        'email_verified_at',
     ];
 
     /**
@@ -82,8 +83,10 @@ class User extends Authenticatable implements JWTSubject
             //     dump($count);
             //     exit;
             // }
-            $user->nickname = $user->nickname ?? "用户_" . (app(Faker::class))->uuid();
+            $faker = app(Faker::class);
+            $user->nickname = $user->nickname ?? "用户_" . $faker->uuid();
             $user->password  =  $user->password ?? "123456";
+            $user->email  =  $user->email ??  $faker->uuid() . "@null.null";
             // $user->save();
         });
     }
