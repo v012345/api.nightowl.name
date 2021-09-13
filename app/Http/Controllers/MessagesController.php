@@ -49,14 +49,15 @@ class MessagesController extends Controller
 
         $view = 'email.activate';
         $subject = "Thanks for your register, please verify your email account first";
-        try{
+
+        try {
             Mail::send($view, compact('activation_token'), function ($message) use ($to, $subject) {
                 $message->to($to)->subject($subject);
             });
-        }catch(Exception $e){
-            return array("code"=>400,"msg"=>"Time out");
+        } catch (Exception $e) {
+
+            return array("code" => 400, "msg" => "Time out");
         }
-        return array("code"=>200,"msg"=>"Sent successfully");
-      
+        return array("code" => 200, "msg" => "Sent successfully");
     }
 }

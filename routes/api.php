@@ -100,5 +100,7 @@ Route::prefix('vue3learning/v2')->group(function () {
         // Redis::del("name");
         // return Redis::get("name");
         // return app(Faker\Generator::class)->emoji();
+        // return redirect()->away("http://www.baidu.com");
+        // return redirect("www.baidu.com",301);
     });
 });
