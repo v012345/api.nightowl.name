@@ -102,5 +102,13 @@ Route::prefix('vue3learning/v2')->group(function () {
         // return app(Faker\Generator::class)->emoji();
         // return redirect()->away("http://www.baidu.com");
         // return redirect("www.baidu.com",301);
+        // return $i = 1;
+        return   $redirectURL = preg_replace_callback(["/^[^(https?:\/\/)].*/", "/(\/+)$/"], function ($matches) {
+            dump($matches);
+            if (isset($matches[1]))
+                return "/";
+            return "http://" . $matches[0] . "/";
+        }, $request->redirectURL);
+        //    $redirectURL;
     });
 });

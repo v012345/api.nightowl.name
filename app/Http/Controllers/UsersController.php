@@ -89,9 +89,9 @@ class UsersController extends Controller
 
         try {
             $activation_token = Crypt::decrypt($request->activation_token);
-            if ((new Carbon())->diffInMinutes(Carbon::parse($activation_token->created_at)) > 3) {
-                abort(403, "The email has expired, please resent a new email!");
-            }
+            // if ((new Carbon())->diffInMinutes(Carbon::parse($activation_token->created_at)) > 3) {
+            //     abort(403, "The email has expired, please resent a new email!");
+            // }
             $user = User::find($activation_token->user->id);
             if (!$user)
                 abort(403, "Wrong user id");
@@ -101,8 +101,11 @@ class UsersController extends Controller
         } catch (QueryException $e) {
             abort(403, "The email has been used");
         }
-        $redirectURL = preg_replace_callback("/\/+$/", function () {
-        }, $activation_token->redirectURL) . "/{$user->id}";
+        $redirectURL = preg_replace_callback(["/^[^(https?:\/\/)].*/", "/(\/+)$/"], function ($matches) {
+            if (isset($matches[1]))
+                return "/";
+            return "http://" . $matches[0] . "/";
+        }, $activation_token->redirectURL) . $user->id;
         // return redirect($activation_token->redirectURL, 301);
         return redirect()->away($redirectURL);
     }
