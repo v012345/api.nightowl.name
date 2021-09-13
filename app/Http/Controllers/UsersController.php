@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Carbon\Carbon;
+use ErrorException;
 use Exception;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Database\QueryException;
@@ -15,7 +16,10 @@ use stdClass;
 class UsersController extends Controller
 {
     //
-
+public function __construct()
+{
+    $this->middleware('throttle:2,1',['only'=>['logout']]);
+}
 
 
     public function signup(Request $request)
@@ -114,16 +118,29 @@ class UsersController extends Controller
 
     public function resetPassword(Request $request)
     {
-        $verification_code = Redis::get($request->by);
+        // $user = User::where($request->all())->get();
+        // 
+
+        if ($request->has("phone_number")) {
+            $key = $request->input("phone_number");
+            $user = User::where("phone_number", $request->phone_number)->first();
+        }
+        if ($request->has("email")) {
+            $key = $request->input("email");
+            $user = User::where("email", $request->email)->first();;
+        }
+        $verification_code = Redis::get($key);
+
         if ($verification_code && $verification_code == $request->verification_code) {
-            Redis::del($request->by);
+            Redis::del($key);
             try {
-                $
-                $user = User::create($request->all());
-            } catch (QueryException $e) {
-                return array('code' => 400, 'msg' => 'Phone number has signed up');
+                $user->password = $request->new_password;
+                $user->save();
+            } catch (ErrorException $e) {
+                // dd($e);
+                return array('code' => 400, 'msg' => 'User doesn\'t exist');
             }
-            return array('code' => 200, 'msg' => 'Has sent sms', 'user' => $user);
+            return array('code' => 200, 'msg' => 'Password has reseted');
         }
         return array('code' => 400, 'msg' => 'Wrong verifying code');
     }
