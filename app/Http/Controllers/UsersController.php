@@ -89,10 +89,9 @@ class UsersController extends Controller
 
         try {
             $activation_token = Crypt::decrypt($request->activation_token);
-
-            // if ((new Carbon())->diffInMinutes(Carbon::parse($activation_token->created_at)) > 3) {
-            //     abort(403, "The email has expired, please resent a new email!");
-            // }
+            if ((new Carbon())->diffInMinutes(Carbon::parse($activation_token->created_at)) > 3) {
+                abort(403, "The email has expired, please resent a new email!");
+            }
             $user = User::find($activation_token->user->id);
             $user->update(["email" => $activation_token->email, "email_verified_at" => now()]);
         } catch (DecryptException $e) {
