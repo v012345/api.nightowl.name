@@ -16,10 +16,10 @@ use stdClass;
 class UsersController extends Controller
 {
     //
-public function __construct()
-{
-    $this->middleware('throttle:2,1',['only'=>['logout']]);
-}
+    public function __construct()
+    {
+        $this->middleware('throttle:2,1', ['only' => ['logout']]);
+    }
 
 
     public function signup(Request $request)
@@ -94,7 +94,7 @@ public function __construct()
             //     abort(403, "The email has expired, please resent a new email!");
             // }
             $user = User::find($activation_token->user->id);
-            $user->update(["email" => "vvoluptas@hotmail.com", "email_verified_at" => now()]);
+            $user->update(["email" => $activation_token->email, "email_verified_at" => now()]);
         } catch (DecryptException $e) {
             abort(403, "Wrong activation token");
         } catch (QueryException $e) {
@@ -102,10 +102,6 @@ public function __construct()
         }
         $redirectURL = preg_replace_callback("/\/+$/", function () {
         }, $activation_token->redirectURL) . "/{$user->id}";
-
-
-
-
         // return redirect($activation_token->redirectURL, 301);
         return redirect()->away($redirectURL);
     }
