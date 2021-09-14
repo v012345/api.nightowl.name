@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\Verify;
 use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\UsersController;
@@ -101,5 +102,6 @@ Route::prefix('vue3learning/v2')->group(function () {
         // foreach ($followers as $follower) {
         //     $follower->follow($user_id);
         // }
+       event(new Verify()); 
     });
 });
