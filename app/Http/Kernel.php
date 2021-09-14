@@ -72,6 +72,7 @@ class Kernel extends HttpKernel
         'ValidateUserInfo' => \App\Http\Middleware\ValidateUserInfo::class,
         'VerifyToken' => \App\Http\Middleware\VerifyToken::class,
         'GenerateToken' => \App\Http\Middleware\GenerateToken::class,
+        'FormatPaginatedResults' => \App\Http\Middleware\FormatPaginatedResults::class,
     ];
 
     /**

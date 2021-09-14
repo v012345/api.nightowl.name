@@ -36,9 +36,9 @@ class MessagesController extends Controller
     {
         $activation_token =  new stdClass();
         $user = new stdClass();
-        $user->id = $request->id;
+        $user->id = $request->user_id;
 
-        $to = $request->email ??  (User::find($request->id))->email;
+        $to = $request->email ??  (User::find($request->user_id))->email;
         $redirectURL = $request->redirectURL ?? "https://www.google.com/";
 
         $activation_token->user = $user;

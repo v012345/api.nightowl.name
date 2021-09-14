@@ -19,6 +19,7 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('throttle:2,1', ['only' => ['logout']]);
+        $this->middleware("FormatPaginatedResults", ['only' => ["all", "blogs", "followers", "followings"]]);
     }
 
 
@@ -62,7 +63,7 @@ class UsersController extends Controller
     }
     public function update(Request $request)
     {
-        $user = User::find($request->id);;
+        $user = User::find($request->user_id);;
         $user->update($request->all());
         // $user->makeVisible('password');
         return array('code' => 200, 'msg' => 'Set profile successfully', 'user' => $user);
@@ -70,13 +71,13 @@ class UsersController extends Controller
 
     public function all(Request $request)
     {
-        $data = User::paginate($request->per_page);
-        return array("code" => 200, "msg" => "OK (from getAllUsers)", "data" => $data);
+        $users = User::paginate($request->per_page);
+        return array("code" => 200, "msg" => "OK (from getAllUsers)", "data" => $users);
     }
 
     public function delete(Request $request)
     {
-        $admin = User::find($request->id);
+        $admin = User::find($request->user_id);
         if ($admin->admin) {
             User::destroy($request->delete_user_id);
             return array('code' => 200, 'msg' => 'User has been deleted (from delete)');
@@ -92,7 +93,7 @@ class UsersController extends Controller
             // if ((new Carbon())->diffInMinutes(Carbon::parse($activation_token->created_at)) > 3) {
             //     abort(403, "The email has expired, please resent a new email!");
             // }
-            $user = User::find($activation_token->user->id);
+            $user = User::find($activation_token->user->user_id);
             if (!$user)
                 abort(403, "Wrong user id");
             $user->update(["email" => $activation_token->email, "email_verified_at" => now()]);
@@ -112,7 +113,7 @@ class UsersController extends Controller
 
     public function detail(Request $request)
     {
-        $user = User::find($request->id);
+        $user = User::find($request->user_id);
         return  array('code' => 200, 'msg' => 'User profile', 'user' => $user);
     }
 
@@ -143,5 +144,50 @@ class UsersController extends Controller
             return array('code' => 200, 'msg' => 'Password has reseted');
         }
         return array('code' => 400, 'msg' => 'Wrong verifying code');
+    }
+
+    public function blogs(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $blogs = $user->blogs()->orderBy('created_at', 'desc')->paginate($request->per_page);
+        return array("code" => 200, "msg" => "OK (from getAllUsers)", "data" => $blogs);
+    }
+
+    public function follow(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $user->followings()->sync($request->follow, false);
+        return array("code" => 200, "msg" => "OK");
+    }
+
+    public function unfollow(Request $request)
+    {
+        $user = User::find($request->user_id);
+        if (!isset($request->unfollow)) {
+            return array("code" => 400, "msg" => "Miss unfollow array");
+        }
+        $user->followings()->detach($request->unfollow);
+        return array("code" => 200, "msg" => "OK");
+    }
+
+    public function followers(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $followers = $user->followers()->paginate($request->per_page);
+        return array("code" => 200, "msg" => "OK", "data" => $followers);
+    }
+
+    public function followings(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $followings = $user->followings()->paginate($request->per_page);;
+        return array("code" => 200, "msg" => "OK", "data" => $followings);
+    }
+
+    public function isFollowing(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $isFollowing = $user->followings->contains($request->is_following);
+        return array("code" => 200, "msg" => "OK", "is_following" => $isFollowing);
     }
 }

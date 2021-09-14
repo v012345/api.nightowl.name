@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\UsersController;
 use App\Models\User;
+use Faker\Generator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
@@ -22,49 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
-Route::prefix('vue3learning/v1')->group(function () {
-    Route::middleware('token')->group(function () {
-        Route::post('test', function () {
-            return 123;
-        })->withoutMiddleware(["VerifyToken"]);
-    });
-    Route::prefix('user')->middleware(["token", "ValidateUserInfo"])->group(function () {
-
-
-        Route::get('verify/email/{verifying_code}/{redirectURL}', [UsersController::class, 'verifyEmail']);
-
-        Route::post('login', [UsersController::class, "login"])->withoutMiddleware(["DecryptUserInfo", "ValidateUserInfo"]);
-        Route::post("logout", [UsersController::class, "logout"])->withoutMiddleware(["EncryptUserInfo"]);
-        Route::post("delete", [UsersController::class, "delete"])->withoutMiddleware(["EncryptUserInfo"]);
-        Route::post('profile', [UsersController::class, 'profile']);
-        Route::post('set/profile', [UsersController::class, 'setProfile']);
-    });
-    Route::prefix('get')->group(function () {
-        Route::post('users', [UsersController::class, 'getAllUsers']);
-        // Route::post('signup', [UsersController::class, 'signup']);
-        // Route::post('login', [UsersController::class, "login"]);
-        // Route::post("logout", [UsersController::class, "logout"]);
-        // Route::post("delete", [UsersController::class, "delete"]);
-        // Route::post('profile', [UsersController::class, 'profile']);
-        // Route::post('set/profile', [UsersController::class, 'setProfile']);
-        // Route::post('orders', [UsersController::class, 'orders']);
-    });
-    Route::prefix('sent')->middleware(["DecryptUserInfo", "ValidateUserInfo", "EncryptUserInfo"])->group(function () {
-        Route::post('email/verify', [MessagesController::class, 'sendEmail']);
-        // Route::post('signup', [UsersController::class, 'signup']);
-        // Route::post('login', [UsersController::class, "login"]);
-        // Route::post("logout", [UsersController::class, "logout"]);
-        // Route::post("delete", [UsersController::class, "delete"]);
-        // Route::post('profile', [UsersController::class, 'profile']);
-        // Route::post('set/profile', [UsersController::class, 'setProfile']);
-        // Route::post('orders', [UsersController::class, 'orders']);
-    });
-});
-
 Route::prefix('vue3learning/v2')->group(function () {
-    Route::post('users', [UsersController::class, 'all'])->middleware([\App\Http\Middleware\FormatPaginatedResults::class]);
+    Route::post('users', [UsersController::class, 'all']);
     Route::prefix('user')->group(function () {
         Route::post('signup', [UsersController::class, 'signup']);
         Route::post('login', [UsersController::class, 'login']);
@@ -74,7 +35,18 @@ Route::prefix('vue3learning/v2')->group(function () {
         Route::post('detail', [UsersController::class, 'detail']);
         Route::post('reset/password', [UsersController::class, 'resetPassword']);
         Route::get('activate/email/{activation_token}', [UsersController::class, 'activateEmail'])->name("activate_email");
+        Route::post('followers', [UsersController::class, "followers"]);
+        Route::post('followings', [UsersController::class, "followings"]);
+        Route::post('follow', [UsersController::class, "follow"]);
+        Route::post('unfollow', [UsersController::class, "unfollow"]);
+        Route::post('is_following', [UsersController::class, "isFollowing"]);
+        Route::post('blogs', [UsersController::class, "blogs"]);
+        Route::prefix("blog")->group(function () {
+            Route::post('post', [BlogsController::class, "post"]);
+            Route::post('delete', [BlogsController::class, "delete"]);
+        });
     });
+
     Route::prefix('send')->group(function () {
         Route::post('email/activation_token', [MessagesController::class, 'sendActivationToken']);
         Route::post('phone/send_verification_code', [MessagesController::class, 'sendVerificationCode']);
@@ -103,12 +75,15 @@ Route::prefix('vue3learning/v2')->group(function () {
         // return redirect()->away("http://www.baidu.com");
         // return redirect("www.baidu.com",301);
         // return $i = 1;
-        return   $redirectURL = preg_replace_callback(["/^[^(https?:\/\/)].*/", "/(\/+)$/"], function ($matches) {
-            dump($matches);
-            if (isset($matches[1]))
-                return "/";
-            return "http://" . $matches[0] . "/";
-        }, $request->redirectURL);
+        // return   $redirectURL = preg_replace_callback(["/^[^(https?:\/\/)].*/", "/(\/+)$/"], function ($matches) {
+        //     dump($matches);
+        //     if (isset($matches[1]))
+        //         return "/";
+        //     return "http://" . $matches[0] . "/";
+        // }, $request->redirectURL);
         //    $redirectURL;
+
+        // dd(app(Generator::class)->dateTime());
+
     });
 });
