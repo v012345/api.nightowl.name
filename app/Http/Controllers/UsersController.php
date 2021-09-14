@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Models\User;
 use Carbon\Carbon;
 use ErrorException;
@@ -19,7 +20,7 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('throttle:2,1', ['only' => ['logout']]);
-        $this->middleware("FormatPaginatedResults", ['only' => ["all", "blogs", "followers", "followings"]]);
+        $this->middleware("FormatPaginatedResults", ['only' => ["all", "blogs", "followers", "followings", "dynamic"]]);
     }
 
 
@@ -153,6 +154,15 @@ class UsersController extends Controller
         return array("code" => 200, "msg" => "OK (from getAllUsers)", "data" => $blogs);
     }
 
+    public function dynamic(Request $request)
+    {
+
+        $user_ids =  User::find($request->user_id)->followings->pluck('id')->toArray();
+        array_push($user_ids, $request->user_id);
+        $dynamic =  Blog::whereIn('user_id', $user_ids)->with('user')->orderBy('created_at', 'desc')->paginate($request->per_page);
+        return array("code" => 200, "msg" => "OK (from getAllUsers)", "data" => $dynamic);
+    }
+
     public function follow(Request $request)
     {
         $user = User::find($request->user_id);
@@ -187,6 +197,7 @@ class UsersController extends Controller
     public function isFollowing(Request $request)
     {
         $user = User::find($request->user_id);
+        // $isFollowing = $user->followings()->get()->contains($request->is_following); or below
         $isFollowing = $user->followings->contains($request->is_following);
         return array("code" => 200, "msg" => "OK", "is_following" => $isFollowing);
     }

@@ -41,6 +41,7 @@ Route::prefix('vue3learning/v2')->group(function () {
         Route::post('unfollow', [UsersController::class, "unfollow"]);
         Route::post('is_following', [UsersController::class, "isFollowing"]);
         Route::post('blogs', [UsersController::class, "blogs"]);
+        Route::post('dynamic', [UsersController::class, "dynamic"]);
         Route::prefix("blog")->group(function () {
             Route::post('post', [BlogsController::class, "post"]);
             Route::post('delete', [BlogsController::class, "delete"]);
@@ -84,6 +85,21 @@ Route::prefix('vue3learning/v2')->group(function () {
         //    $redirectURL;
 
         // dd(app(Generator::class)->dateTime());
+        // return gettype(User::all());
+        // $users = User::all();
+        // $user = $users->first();
+        // $user_id = $user->id;
 
+        // // 获取去除掉 ID 为 1 的所有用户 ID 数组
+        // $followers = $users->slice(1);
+        // $follower_ids = $followers->pluck('id')->toArray();
+
+        // // 关注除了 1 号用户以外的所有用户
+        // $user->follow($follower_ids);
+
+        // // 除了 1 号用户以外的所有用户都来关注 1 号用户
+        // foreach ($followers as $follower) {
+        //     $follower->follow($user_id);
+        // }
     });
 });
