@@ -102,6 +102,7 @@ Route::prefix('vue3learning/v2')->group(function () {
         // foreach ($followers as $follower) {
         //     $follower->follow($user_id);
         // }
-       event(new Verify()); 
+        //    event(new Verify()); 
+        dd($request->all());
     });
 });
