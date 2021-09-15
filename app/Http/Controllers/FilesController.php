@@ -19,7 +19,7 @@ class FilesController extends Controller
         $client = new Google_Client(config("google"));
         $accessToken = json_decode(Redis::get("google_access_token"), true);
         try {
-            $client->setAccessToken(json_decode($accessToken, true));
+            $client->setAccessToken($accessToken);
         } catch (Exception $e) {
         }
 
