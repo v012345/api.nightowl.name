@@ -29,6 +29,16 @@ class FilesController extends Controller
         if ($client->isAccessTokenExpired()) {
             if ($client->getRefreshToken()) {
                 $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+            }
+            if ($authCode = Redis::get("google_auth_code")) {
+                $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
+                $client->setAccessToken($accessToken);
+                if (array_key_exists('error', $accessToken)) {
+                    event(new GoogleAccessTokenExpired("Can't get access token"));
+                    $this->google_drive = null;
+                    return;
+                }
+                Redis::set("google_auth_code", json_encode($client->getAccessToken()));
             } else {
                 event(new GoogleAccessTokenExpired($client->createAuthUrl()));
                 $this->google_drive = null;
