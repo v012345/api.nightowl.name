@@ -58,9 +58,7 @@ Route::prefix('vue3learning/v2')->group(function () {
     });
 
 
-    Route::get("google_access_token", function (Request $request) {
-        Redis::set("google_access_token", $request->code);
-    });
+
 
     Route::any('/test', function (Request $request) {
         // return view('welcome');
@@ -115,4 +113,7 @@ Route::prefix('vue3learning/v2')->group(function () {
         // dd($request->all());
 
     });
+});
+Route::get("google_access_token", function (Request $request) {
+    Redis::set("google_access_token", $request->code);
 });
