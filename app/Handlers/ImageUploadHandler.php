@@ -9,18 +9,18 @@ class ImageUploadHandler
 {
     protected $allowed_ext = ["png", "jpg", "jpeg", "gif"];
 
-    public function saveImage($file, $type)
+    public function saveImage($file)
     {
-        $folder = "uploads/images/" . date("Ym/d", time());
-        $save_path = public_path() . '/' . $folder;
+        $relative_path = "uploads/images/" . date("Ym/d", time());
+        $absolute_path = public_path() . '/' . $relative_path;
         $extension = strtolower($file->getClientOriginalExtension()) ?: 'png';
-        $filename = $type . '_' . time() . '_' . Str::random(10) . '.' . $extension;
+        $filename = time() . '_' . Str::random(10) . '.' . $extension;
         if (!in_array($extension, $this->allowed_ext)) {
             return false;
         }
-        $file->move($save_path, $filename);
-        $image = Image::make("$save_path/$filename");
+        $file->move($absolute_path, $filename);
+        $image = Image::make("$absolute_path/$filename");
         $image->resize(400, 400)->save();
-        return config('app.url') . "/$save_path/$filename";
+        return config('app.url') . "/$relative_path/$filename";
     }
 }
