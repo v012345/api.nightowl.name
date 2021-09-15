@@ -35,8 +35,11 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->email(),
             'password' => '123456',
             'admin' => false,
+            'email_verified_at' => now(),
             'phone_number' => $this->faker->unique()->phoneNumber(),
             'account' => $this->faker->unique()->userName(),
+            'introduction' => $this->faker->sentence(),
+            'avatar' => $this->faker->imageUrl(),
         ];
     }
 
