@@ -39,7 +39,7 @@ class FilesController extends Controller
                     $this->google_drive = null;
                     return;
                 }
-                Redis::set("google_auth_code", json_encode($client->getAccessToken()));
+                Redis::set("google_access_token", json_encode($client->getAccessToken()));
             } else {
                 dump(5);
                 event(new GoogleAccessTokenExpired($client->createAuthUrl()));
