@@ -21,31 +21,40 @@ class FilesController extends Controller
         try {
             $client->setAccessToken(json_decode($accessToken, true));
         } catch (InvalidArgumentException $e) {
-            event(new GoogleAccessTokenExpired($client->createAuthUrl()));
-            $this->google_drive = null;
-            return;
         }
 
+
         if ($client->isAccessTokenExpired()) {
+            dump(1);
             if ($client->getRefreshToken()) {
+                dump(2);
                 $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-            }
-            if ($authCode = Redis::get("google_auth_code")) {
+            } elseif ($authCode = Redis::get("google_auth_code")) {
+                dump(3);
                 $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
+                dd($authCode);
                 $client->setAccessToken($accessToken);
                 if (array_key_exists('error', $accessToken)) {
+                    dump(4);
                     event(new GoogleAccessTokenExpired("Can't get access token"));
                     $this->google_drive = null;
                     return;
                 }
                 Redis::set("google_auth_code", json_encode($client->getAccessToken()));
             } else {
+                dump(5);
                 event(new GoogleAccessTokenExpired($client->createAuthUrl()));
                 $this->google_drive = null;
                 return;
             }
+            $this->google_drive = $client;
+            return;
+        } else {
+            $this->google_drive = $client;
+            return;
         }
-        $this->google_drive = $client;
+        dump(6);
+        $this->google_drive = null;
     }
 
     public function uploadAvatar(Request $request)
