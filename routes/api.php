@@ -116,4 +116,5 @@ Route::prefix('vue3learning/v2')->group(function () {
 });
 Route::get("google_access_token", function (Request $request) {
     Redis::setex("google_auth_code", 3600, $request->code);
+    return 200;
 });
