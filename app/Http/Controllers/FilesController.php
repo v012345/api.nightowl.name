@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Events\GoogleAccessTokenExpired;
 use Exception;
+use Google\Service\Drive;
+use Google\Service\Drive\DriveFile;
 use Google_Client;
+use Google_Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 
@@ -50,6 +53,58 @@ class FilesController extends Controller
 
     public function uploadAvatar(Request $request)
     {
-        dump($this->google_drive);
+        // dd($request->avatar);
+        // dd($request->avatar->getClientOriginalName());
+        $service = new Drive($this->google_drive);
+        $file  = new DriveFile();
+
+        $files = $service->files->listFiles(array(
+            'q' => "'root' in parents",
+            'fields' => 'nextPageToken, files(id, name, webViewLink, mimeType,webContentLink)'
+        ))->getFiles();
+
+        dd($files);
+
+        $file->setName($request->avatar->getClientOriginalName());
+        $file->setParents(["1F-QQaHZZGN_1LnZn3Iuaurt32xCYuUit"]);
+        $file->setMimeType($request->avatar->getClientMimeType());
+
+        $result = $service->files->create($file, ['data' => file_get_contents($request->avatar->getPathname())]);
+        dump($file->getWebViewLink());
+        dd($result->getWebViewLink());
+        $file->setMimeType("application/octet-stream");
+
+        $service->files->create($file);
+        dd($file->getWebViewLink());
+
+        $parameters['q'] = "mimeType='application/vnd.google-apps.folder'   and trashed=false";
+        $files = $service->files->listFiles($parameters);
+        dd($files);
+
+        $file->getWebViewLink();
+        dd($file);
+        $parameters['q'] = "mimeType='application/vnd.google-apps.folder' and 'root' in parents and trashed=false";
+        $files = $service->files->listFiles();
+        dd($files);
+        $file->setName("/abc/abc/acb/");
+        $file->setMimeType("application/vnd.google-apps.folder");
+        // $files->setId
+        $result = $service->files->create(
+            $file
+        );
+        dd($result);
+
+        dd($result);
+        $parameters['q'] = "mimeType='application/vnd.google-apps.folder' and 'root' in parents and trashed=false";
+        $files = $service->files->listFiles($parameters);
+        dd($files);
+
+        $parameters['q'] = "mimeType='application/vnd.google-apps.folder' and name='ffff' and trashed=false";
+        $files = $service->files->listFiles($parameters);
+        $folder = new DriveFile();
+        $folder->setName("aaaaaa");
+        $folder->setMimeType('application/vnd.google-apps.folder');
+        $result = $service->files->create($folder);
+        $folder_id = $result['id'];
     }
 }

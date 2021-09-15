@@ -33,7 +33,6 @@ Route::prefix('vue3learning/v2')->group(function () {
         Route::post('login', [UsersController::class, 'login']);
         Route::post('logout', [UsersController::class, 'logout']);
         Route::post('update', [UsersController::class, 'update']);
-        Route::post('upload/avatar', [FilesController::class, 'uploadAvatar']);
         Route::post('delete', [UsersController::class, 'delete']);
         Route::post('detail', [UsersController::class, 'detail']);
         Route::post('reset/password', [UsersController::class, 'resetPassword']);
@@ -105,8 +104,8 @@ Route::prefix('vue3learning/v2')->group(function () {
         //     $follower->follow($user_id);
         // }
         //    event(new Verify()); 
-        // $func = new ReflectionClass('Google_Service_Drive');
-        // echo    $func->getFileName();
+        $func = new ReflectionClass('Google_Service_Drive');
+        echo    $func->getFileName();
         // dd(json_decode(null, true));
         // dd(config("google"));
         // dd(Google_Service_Drive::DRIVE);

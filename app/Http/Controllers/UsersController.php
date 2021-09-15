@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Handlers\ImageUploadHandler;
 use App\Models\Blog;
 use App\Models\User;
 use Carbon\Carbon;
@@ -62,11 +63,20 @@ class UsersController extends Controller
     {
         return array('code' => 200, 'msg' => 'User log out (from logout)');
     }
-    public function update(Request $request)
+    public function update(Request $request, ImageUploadHandler $uploader)
     {
-        $user = User::find($request->user_id);;
-        $user->update($request->all());
+        $user = User::find($request->user_id);
+
+        if ($request->avatar) {
+            $avatar = $uploader->saveImage($request->avatar, "avatars");
+            if ($avatar) {
+                $user->update(["avatar" => $avatar]);
+            }
+        }
+        // $request->headers=123;
+        $user->update($request->except("avatar"));
         // $user->makeVisible('password');
+        dd($user);
         return array('code' => 200, 'msg' => 'Set profile successfully', 'user' => $user);
     }
 
