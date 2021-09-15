@@ -103,6 +103,12 @@ Route::prefix('vue3learning/v2')->group(function () {
         //     $follower->follow($user_id);
         // }
         //    event(new Verify()); 
-        dd($request->all());
+        // $func = new ReflectionClass('Google_Service_Drive');
+        // echo    $func->getFileName();
+        // dd(json_decode(null, true));
+        // dd(config("google"));
+        // dd(Google_Service_Drive::DRIVE);
+        // dd($request->all());
+
     });
 });

@@ -7,7 +7,9 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use App\Events\Verify;
+use App\Events\GoogleAccessTokenExpired;
 use App\Listeners\SendVerificationCode;
+use App\Listeners\SendNotificationToAdmin;
 
 
 class EventServiceProvider extends ServiceProvider
@@ -24,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
         Verify::class => [
             SendVerificationCode::class,
         ],
+        GoogleAccessTokenExpired::class => [
+            SendNotificationToAdmin::class
+        ]
     ];
 
     /**
