@@ -32,7 +32,6 @@ class FilesController extends Controller
             } elseif ($authCode = Redis::get("google_auth_code")) {
                 dump(3);
                 $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
-                dd($authCode);
                 $client->setAccessToken($accessToken);
                 if (array_key_exists('error', $accessToken)) {
                     dump(4);
