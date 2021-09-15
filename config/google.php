@@ -16,5 +16,5 @@ return [
     "scopes" => "https://www.googleapis.com/auth/drive",
     "access_type" => "offline",
     "prompt" => 'select_account consent',
-    "redirect_uri" => "https://api.nightowl.name/api",
+    "redirect_uri" => "https://api.nightowl.name/api/google_access_token",
 ];

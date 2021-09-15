@@ -2,6 +2,7 @@
 
 use App\Events\Verify;
 use App\Http\Controllers\BlogsController;
+use App\Http\Controllers\FilesController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\UsersController;
 use App\Models\User;
@@ -32,6 +33,7 @@ Route::prefix('vue3learning/v2')->group(function () {
         Route::post('login', [UsersController::class, 'login']);
         Route::post('logout', [UsersController::class, 'logout']);
         Route::post('update', [UsersController::class, 'update']);
+        Route::post('upload/avatar', [FilesController::class, 'uploadAvatar']);
         Route::post('delete', [UsersController::class, 'delete']);
         Route::post('detail', [UsersController::class, 'detail']);
         Route::post('reset/password', [UsersController::class, 'resetPassword']);
@@ -56,7 +58,9 @@ Route::prefix('vue3learning/v2')->group(function () {
     });
 
 
-
+    Route::get("google_access_token", function (Request $request) {
+        Redis::set("google_access_token", $request->code);
+    });
 
     Route::any('/test', function (Request $request) {
         // return view('welcome');
