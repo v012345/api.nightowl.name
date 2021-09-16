@@ -56,6 +56,9 @@ Route::prefix('vue3learning/v2')->group(function () {
         function () {
             Route::post("index", [TopicsController::class, "index"]);
             Route::post("create", [TopicsController::class, "create"]);
+            Route::post("upload_images", [TopicsController::class, "uploadImage"]);
+            Route::post("edit", [TopicsController::class, "edit"]);
+            Route::post("delete", [TopicsController::class, "delete"]);
         }
     );
 

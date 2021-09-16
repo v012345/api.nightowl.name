@@ -68,7 +68,7 @@ class UsersController extends Controller
         $user = User::find($request->user_id);
 
         if ($request->avatar) {
-            $avatar = $uploader->saveImage($request->avatar, "avatars");
+            $avatar = $uploader->saveImage($request->avatar, true);
             if ($avatar) {
                 $user->update(["avatar" => $avatar]);
             }

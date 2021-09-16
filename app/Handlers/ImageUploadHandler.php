@@ -9,7 +9,7 @@ class ImageUploadHandler
 {
     protected $allowed_ext = ["png", "jpg", "jpeg", "gif"];
 
-    public function saveImage($file)
+    public function saveImage($file, $resize = true)
     {
         $relative_path = "uploads/images/" . date("Ym/d", time());
         $absolute_path = public_path() . '/' . $relative_path;
@@ -19,8 +19,10 @@ class ImageUploadHandler
             return false;
         }
         $file->move($absolute_path, $filename);
-        $image = Image::make("$absolute_path/$filename");
-        $image->resize(400, 400)->save();
+        if ($resize) {
+            $image = Image::make("$absolute_path/$filename");
+            $image->resize(400, 400)->save();
+        }
         return config('app.url') . "/$relative_path/$filename";
     }
 }
