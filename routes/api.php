@@ -132,9 +132,8 @@ Route::prefix('vue3learning/v2')->group(function () {
         // $user =  User::find(1);
         // return Str::slug("aaaaa aefe ef fae f<fes> es<script>faed</ script>www");
         // return $user->blogs()->paginate(3);
-        dd(config('queue.default'));
-        // $topic = Topic::find(2);
-        // dispatch(new TranslateSlug($topic));
+        $topic = Topic::find(2);
+        dispatch(new TranslateSlug($topic));
     });
 });
 Route::get("google_access_token", function (Request $request) {
