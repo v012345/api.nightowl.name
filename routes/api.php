@@ -4,6 +4,7 @@ use App\Events\Verify;
 use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\FilesController;
 use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\UsersController;
 use App\Models\User;
 use Faker\Generator;
@@ -49,6 +50,12 @@ Route::prefix('vue3learning/v2')->group(function () {
             Route::post('delete', [BlogsController::class, "delete"]);
         });
     });
+
+    Route::prefix("topic")->group(
+        function () {
+            Route::post("index", [TopicsController::class, "index"]);
+        }
+    );
 
     Route::prefix('send')->group(function () {
         Route::post('email/activation_token', [MessagesController::class, 'sendActivationToken']);
@@ -111,7 +118,12 @@ Route::prefix('vue3learning/v2')->group(function () {
         // dd(Google_Service_Drive::DRIVE);
         // dd($request->all());
         // User::truncate();
-       return app(Generator::class)->imageUrl();
+        //    return app(Generator::class)->imageUrl();
+        // return 0;
+
+        $user =  User::find(1);
+        return $user->blogs()->paginate(3);
+        return User::all();
     });
 });
 Route::get("google_access_token", function (Request $request) {
