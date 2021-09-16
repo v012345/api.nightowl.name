@@ -15,6 +15,6 @@ class RepliesTableSeeder extends Seeder
     public function run()
     {
         //
-        Reply::factory()->times(100000)->create();
+        Reply::factory()->count(100000)->create();
     }
 }
