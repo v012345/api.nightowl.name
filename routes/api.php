@@ -6,12 +6,14 @@ use App\Http\Controllers\FilesController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\UsersController;
+use App\Jobs\TranslateSlug;
 use App\Models\Topic;
 use App\Models\User;
 use Faker\Generator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,7 +130,10 @@ Route::prefix('vue3learning/v2')->group(function () {
         // return User::where("id", 1)->first();
         // return Topic::orderWith("updated_at")->get();
         // $user =  User::find(1);
+        // return Str::slug("aaaaa aefe ef fae f<fes> es<script>faed</ script>www");
         // return $user->blogs()->paginate(3);
+        $topic = Topic::find(2);
+        dispatch(new TranslateSlug($topic));
     });
 });
 Route::get("google_access_token", function (Request $request) {

@@ -27,7 +27,6 @@ class TopicsController extends Controller
     {
 
         $topic->fill($request->all());
-        $topic->body = clean($topic->body);
         $topic->user_id = $request->user_id;
         $topic->save();
 
