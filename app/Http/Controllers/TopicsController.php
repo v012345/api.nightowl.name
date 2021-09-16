@@ -14,7 +14,8 @@ class TopicsController extends Controller
     }
     public function index(Request $request)
     {
-        $topics = Topic::with(["category","user"])->paginate($request->per_page);
+        
+        $topics = Topic::orderWith("updated_at")->whereIn("category_id", [1])->with(["category", "user"])->paginate($request->per_page);
         return array("code" => 200, "msg" => "OK", "data" => $topics);
         // Topic::query()->paginate(5);
     }

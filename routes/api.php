@@ -6,6 +6,7 @@ use App\Http\Controllers\FilesController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\UsersController;
+use App\Models\Topic;
 use App\Models\User;
 use Faker\Generator;
 use Illuminate\Http\Request;
@@ -120,10 +121,11 @@ Route::prefix('vue3learning/v2')->group(function () {
         // User::truncate();
         //    return app(Generator::class)->imageUrl();
         // return 0;
-
-        $user =  User::find(1);
-        return $user->blogs()->paginate(3);
-        return User::all();
+        // return User::where("id", 1)->first();
+        // return Topic::orderWith("updated_at")->get();
+        // $user =  User::find(1);
+        // return $user->blogs()->paginate(3);
+        return User::find(1)->topics()->with("category")->paginate(5);
     });
 });
 Route::get("google_access_token", function (Request $request) {
