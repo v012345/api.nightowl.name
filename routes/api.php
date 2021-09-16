@@ -55,6 +55,7 @@ Route::prefix('vue3learning/v2')->group(function () {
     Route::prefix("topic")->group(
         function () {
             Route::post("index", [TopicsController::class, "index"]);
+            Route::post("create", [TopicsController::class, "create"]);
         }
     );
 
@@ -125,7 +126,6 @@ Route::prefix('vue3learning/v2')->group(function () {
         // return Topic::orderWith("updated_at")->get();
         // $user =  User::find(1);
         // return $user->blogs()->paginate(3);
-        return User::find(1)->topics()->with("category")->paginate(5);
     });
 });
 Route::get("google_access_token", function (Request $request) {
