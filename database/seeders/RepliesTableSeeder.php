@@ -15,15 +15,15 @@ class RepliesTableSeeder extends Seeder
     public function run()
     {
         //
-        Reply::factory()->count(10000)->create();
-        Reply::factory()->count(10000)->create();
-        Reply::factory()->count(10000)->create();
-        Reply::factory()->count(10000)->create();
-        Reply::factory()->count(10000)->create();
-        Reply::factory()->count(10000)->create();
-        Reply::factory()->count(10000)->create();
-        Reply::factory()->count(10000)->create();
-        Reply::factory()->count(10000)->create();
-        Reply::factory()->count(10000)->create();
+        Reply::factory()->times(10000)->create();
+        Reply::factory()->times(10000)->create();
+        Reply::factory()->times(10000)->create();
+        Reply::factory()->times(10000)->create();
+        Reply::factory()->times(10000)->create();
+        Reply::factory()->times(10000)->create();
+        Reply::factory()->times(10000)->create();
+        Reply::factory()->times(10000)->create();
+        Reply::factory()->times(10000)->create();
+        Reply::factory()->times(10000)->create();
     }
 }
