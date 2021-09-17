@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Reply;
+use App\Notifications\TopicReplied;
 use PhpParser\Node\Expr\FuncCall;
 
 class ReplyObserver
@@ -11,7 +12,7 @@ class ReplyObserver
     // saved,  deleting, deleted, restoring, restored
     public function creating(Reply $reply)
     {
-        $reply->content = clean($reply->content,"default");
+        $reply->content = clean($reply->content, "default");
     }
     public function created(Reply $reply)
     {
@@ -20,6 +21,11 @@ class ReplyObserver
         $topic = $reply->topic()->first();
         $topic->reply_count = $topic->replies()->count();
         $topic->save();
+
+        if ($reply->user->id != $reply->topic->user->id) {
+            $reply->topic->user->increment("notification_count");
+            $reply->topic->user->notify(new TopicReplied($reply));
+        }
     }
     // public function deleting(Reply $reply)
     // {

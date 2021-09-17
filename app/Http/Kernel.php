@@ -44,10 +44,10 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
-        'token' => [
-            \App\Http\Middleware\GenerateToken::class,
-            \App\Http\Middleware\VerifyToken::class,
-        ],
+        // 'token' => [
+        //     \App\Http\Middleware\GenerateToken::class,
+        //     \App\Http\Middleware\VerifyToken::class,
+        // ],
     ];
 
     /**

@@ -4,6 +4,7 @@ use App\Events\Verify;
 use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\FilesController;
 use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\UsersController;
@@ -13,6 +14,7 @@ use App\Models\Topic;
 use App\Models\User;
 use Faker\Generator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -63,6 +65,12 @@ Route::prefix('vue3learning/v2')->group(function () {
             Route::post("upload_images", [TopicsController::class, "uploadImage"]);
             Route::post("edit", [TopicsController::class, "edit"]);
             Route::post("delete", [TopicsController::class, "delete"]);
+        }
+    );
+
+    Route::prefix("notification")->group(
+        function () {
+            Route::post("read", [NotificationsController::class, "read"]);
         }
     );
 
@@ -143,13 +151,15 @@ Route::prefix('vue3learning/v2')->group(function () {
         // return $user->blogs()->paginate(3);
         // $topic = Topic::find(2);
         // dispatch(new TranslateSlug($topic));
-        $user = User::find(1);
-        $topics=$user->topics()->get();
-        // dd($user->topics()->get()== $user->topics);
-        // dd($topics);
-        foreach($topics as $topic){
-            dd($topic->replies());
-        }
+        // $user = User::find(1);
+        // $user->topics();
+        // return $user;
+        // $topics=$user->topics()->get();
+        // // dd($user->topics()->get()== $user->topics);
+        // // dd($topics);
+        // foreach($topics as $topic){
+        //     dd($topic->replies());
+        // }
         // dd($user->topics()->reply_count == $user->topics->reply_count);
         // $reply = Reply::find(3);
         // // $reply->topic()->first()->reply_count=20;
@@ -164,6 +174,10 @@ Route::prefix('vue3learning/v2')->group(function () {
         // return $reply->topic() == $reply->topic;
 
         // return $user->paginate(2)->appends("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+       return Date::now();
+        $user = User::find(9);
+        $user->notifications->paginate(2);
+        return $user;
     });
 });
 Route::get("google_access_token", function (Request $request) {
