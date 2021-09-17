@@ -33,14 +33,14 @@ class TopicReplied extends Notification implements ShouldQueue
     public function via($notifiable)
     {
         // return ['mail'];
-        return ['database'];
+        return ['database', 'mail'];
     }
 
     public function toDatabase($notifiable)
     {
         $topic = $this->reply->topic;
         // $link =  $topic->link(['#reply' . $this->reply->id]);
-        sleep(30);
+        // sleep(30);
         return [
             'reply_id' => $this->reply->id,
             'reply_content' => $this->reply->content,
