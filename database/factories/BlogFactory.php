@@ -25,8 +25,10 @@ class BlogFactory extends Factory
             //
             "content" => $this->faker->text(),
             "user_id" => $this->faker->randomElement([1, 2, 3, 4]),
-            "created_at" => date("Y-m-d H:i:s", $this->faker->unixTime()),
-            "updated_at" => date("Y-m-d H:i:s", $this->faker->unixTime()),
+            // "created_at" => date("Y-m-d H:i:s", $this->faker->unixTime()),
+            // "updated_at" => date("Y-m-d H:i:s", $this->faker->unixTime()),
+            'updated_at' => $this->faker->dateTime(),
+            'created_at' => $this->faker->dateTime(),
         ];
     }
 }

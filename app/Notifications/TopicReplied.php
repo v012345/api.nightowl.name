@@ -46,7 +46,7 @@ class TopicReplied extends Notification implements ShouldQueue
             'reply_id' => $this->reply->id,
             'reply_content' => $this->reply->content,
             'user_id' => $this->reply->user->id,
-            'user_nickname' => $this->reply->user->nickname,
+            'user_name' => $this->reply->user->name,
             'user_avatar' => $this->reply->user->avatar,
             'topic_id' => $this->reply->topic->id,
             'topic_title' => $this->reply->topic->title,
