@@ -8,6 +8,7 @@ use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\UsersController;
 use App\Jobs\TranslateSlug;
+use App\Models\Reply;
 use App\Models\Topic;
 use App\Models\User;
 use Faker\Generator;
@@ -68,6 +69,7 @@ Route::prefix('vue3learning/v2')->group(function () {
     Route::prefix("reply")->group(
         function () {
             Route::post("create", [RepliesController::class, "create"]);
+            Route::post("delete", [RepliesController::class, "delete"]);
         }
     );
 
@@ -142,8 +144,26 @@ Route::prefix('vue3learning/v2')->group(function () {
         // $topic = Topic::find(2);
         // dispatch(new TranslateSlug($topic));
         $user = User::find(1);
+        $topics=$user->topics()->get();
+        // dd($user->topics()->get()== $user->topics);
+        // dd($topics);
+        foreach($topics as $topic){
+            dd($topic->replies());
+        }
+        // dd($user->topics()->reply_count == $user->topics->reply_count);
+        // $reply = Reply::find(3);
+        // // $reply->topic()->first()->reply_count=20;
+        // $topic =  $reply->topic()->first();
+        // // dd($topic);
+        // $topic->reply_count=20;
+        // $topic->save();
+        // $reply->topic->reply_count = 20;
+        // $reply->save();
+        // dump($reply->topic()->first()->reply_count, $reply->topic->reply_count);
 
-        return $user->paginate(2)->appends("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        // return $reply->topic() == $reply->topic;
+
+        // return $user->paginate(2)->appends("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     });
 });
 Route::get("google_access_token", function (Request $request) {

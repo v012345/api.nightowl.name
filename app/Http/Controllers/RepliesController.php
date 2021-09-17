@@ -14,4 +14,10 @@ class RepliesController extends Controller
         $reply = Reply::create($request->all());
         return array("code" => 200, "msg" => "OK", "reply" => $reply);
     }
+
+    public function delete(Request $reply)
+    {
+        Reply::destroy($reply->reply_id);
+        return array("code" => 200, "msg" => "OK");
+    }
 }

@@ -9,7 +9,8 @@ use Illuminate\Support\Str;
 
 class TopicObserver
 {
-    //
+    // creating, created, updating, updated, saving,
+    // saved,  deleting, deleted, restoring, restored
     public function saving(Topic $topic)
     {
         $topic->body = clean($topic->body, "user_topic_body");
