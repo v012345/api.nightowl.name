@@ -19,7 +19,7 @@ class CreateTopicsTable extends Migration
             $table->text("body");
             $table->unsignedBigInteger("user_id")->index();
             $table->unsignedInteger("category_id")->index();
-            $table->unsignedBigInteger("relpy_count")->index()->default(0);
+            $table->unsignedBigInteger("reply_count")->index()->default(0);
             $table->unsignedBigInteger("view_count")->index()->default(0);
             $table->unsignedBigInteger("last_reply_user_id")->nullable()->index();
             $table->unsignedBigInteger("order")->default(0);

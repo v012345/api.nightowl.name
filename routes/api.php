@@ -4,6 +4,7 @@ use App\Events\Verify;
 use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\FilesController;
 use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\UsersController;
 use App\Jobs\TranslateSlug;
@@ -61,6 +62,12 @@ Route::prefix('vue3learning/v2')->group(function () {
             Route::post("upload_images", [TopicsController::class, "uploadImage"]);
             Route::post("edit", [TopicsController::class, "edit"]);
             Route::post("delete", [TopicsController::class, "delete"]);
+        }
+    );
+
+    Route::prefix("reply")->group(
+        function () {
+            Route::post("create", [RepliesController::class, "create"]);
         }
     );
 
@@ -132,8 +139,11 @@ Route::prefix('vue3learning/v2')->group(function () {
         // $user =  User::find(1);
         // return Str::slug("aaaaa aefe ef fae f<fes> es<script>faed</ script>www");
         // return $user->blogs()->paginate(3);
-        $topic = Topic::find(2);
-        dispatch(new TranslateSlug($topic));
+        // $topic = Topic::find(2);
+        // dispatch(new TranslateSlug($topic));
+        $user = User::find(1);
+
+        return $user->paginate(2)->appends("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     });
 });
 Route::get("google_access_token", function (Request $request) {

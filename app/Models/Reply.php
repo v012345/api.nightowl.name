@@ -9,13 +9,20 @@ class Reply extends Model
 {
     use HasFactory;
 
-    protected $fillable=['content'];
+    protected $fillable = ['content', "user_id", "topic_id"];
 
-    public function user(){
-        return $this->belongsTo(User::class,"user_id","id");
+    public function user()
+    {
+        return $this->belongsTo(User::class, "user_id", "id");
     }
 
-    public function topic(){
-        return $this->belongsTo(Topic::class,"topic_id","id");
+    public function topic()
+    {
+        return $this->belongsTo(Topic::class, "topic_id", "id");
+    }
+
+    public function scopeRecent($query)
+    {
+        return $query->orderBy("id", "desc");
     }
 }
