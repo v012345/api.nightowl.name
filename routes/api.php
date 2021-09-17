@@ -174,10 +174,11 @@ Route::prefix('vue3learning/v2')->group(function () {
         // return $reply->topic() == $reply->topic;
 
         // return $user->paginate(2)->appends("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        dd(url('12'), url()->current(), url()->full(), url()->previous());
+        // dd(url('12'), url()->current(), url()->full(), url()->previous());
         // $user = User::find(9);
         // $user->notifications->paginate(2);
         // return $user;
+        dd(Topic::truncate());
     });
 });
 Route::get("google_access_token", function (Request $request) {

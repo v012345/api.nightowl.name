@@ -18,13 +18,14 @@ class ReplyObserver
     {
         // $reply->topic()->increment("reply_count", 1);
         // $reply->topic()->increment("reply_count");
-        $topic = $reply->topic()->first();
-        $topic->reply_count = $topic->replies()->count();
-        $topic->save();
 
-        if ($reply->user->id != $reply->topic->user->id) {
-            $reply->topic->user->increment("notification_count");
-            $reply->topic->user->notify(new TopicReplied($reply));
+        $reply->topic->reply_count = $reply->topic->replies()->count();
+        $reply->topic->save();
+        if (!app()->runningInConsole()) {
+            if ($reply->user->id != $reply->topic->user->id) {
+                $reply->topic->user->increment("notification_count");
+                $reply->topic->user->notify(new TopicReplied($reply));
+            }
         }
     }
     // public function deleting(Reply $reply)

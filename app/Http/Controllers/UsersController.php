@@ -211,4 +211,8 @@ class UsersController extends Controller
         $isFollowing = $user->followings->contains($request->is_following);
         return array("code" => 200, "msg" => "OK", "is_following" => $isFollowing);
     }
+
+    public function adminLogin(){
+        
+    }
 }
