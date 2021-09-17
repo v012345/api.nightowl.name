@@ -11,6 +11,11 @@ class Reply extends Model
 
     protected $fillable = ['content', "user_id", "topic_id"];
 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, "user_id", "id");

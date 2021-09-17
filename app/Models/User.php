@@ -23,15 +23,14 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'nickname',
+        'name',
         'email',
         'password',
         'phone_number',
         'avatar',
-        'admin',
-        'email_verified_at',
         'introduction'
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -40,7 +39,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'email_verified_at',
         'remember_token',
     ];
 
@@ -50,7 +48,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
+        // 'email_verified_at' => 'datetime',
         'email_verified_at' => 'datetime',
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     public function blogs()
@@ -83,42 +84,42 @@ class User extends Authenticatable
 
 
 
-    /**
-     * serialize date for array / JSON 
-     * but I overwirte the method 
-     * because the time than model return before is less 8 hours than now
-     * I need East 8 not UTC
-     * @param  \DateTimeInterface  $date
-     * @return string
-     */
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
+    // /**
+    //  * serialize date for array / JSON 
+    //  * but I overwirte the method 
+    //  * because the time than model return before is less 8 hours than now
+    //  * I need East 8 not UTC
+    //  * @param  \DateTimeInterface  $date
+    //  * @return string
+    //  */
+    // protected function serializeDate(DateTimeInterface $date)
+    // {
+    //     return $date->format('Y-m-d H:i:s');
+    // }
 
-    /**
-     * boot() will execute before new Model()
-     * in it , I use a Listener (whichever) to listen the creating evnet
-     * that will emit before Model::create() or $model->save()
-     * @return void
-     */
-    public static function boot()
-    {
-        // static $count = 0;
-        parent::boot();
-        // static::creating(function ($user) use ($count) {
-        static::creating(function ($user) {
+    // /**
+    //  * boot() will execute before new Model()
+    //  * in it , I use a Listener (whichever) to listen the creating evnet
+    //  * that will emit before Model::create() or $model->save()
+    //  * @return void
+    //  */
+    // public static function boot()
+    // {
+    //     // static $count = 0;
+    //     parent::boot();
+    //     // static::creating(function ($user) use ($count) {
+    //     static::creating(function ($user) {
 
-            // ++$count;
-            // if ($count > 5) {
-            //     dump($count);
-            //     exit;
-            // }
-            $faker = app(Faker::class);
-            $user->nickname = $user->nickname ?? "用户_" . $faker->uuid();
-            $user->password  =  $user->password ?? "123456";
-            $user->email  =  $user->email ??  $faker->uuid() . "@null.null";
-            // $user->save();
-        });
-    }
+    //         // ++$count;
+    //         // if ($count > 5) {
+    //         //     dump($count);
+    //         //     exit;
+    //         // }
+    //         $faker = app(Faker::class);
+    //         $user->nickname = $user->nickname ?? "用户_" . $faker->uuid();
+    //         $user->password  =  $user->password ?? "123456";
+    //         $user->email  =  $user->email ??  $faker->uuid() . "@null.null";
+    //         // $user->save();
+    //     });
+    // }
 }
