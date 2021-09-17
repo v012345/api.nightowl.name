@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     // return view('welcome');
     // return array("code"=>200,"status"=>"OK");
+    return redirect()->away("https://www.nightowl.name",301);
 });
