@@ -11,7 +11,7 @@ class UserObserver
     public function creating(User $user)
     {
 
-        $user->email  =  $user->email ?? $user->phone_number . "@" . config("app.name") . "com";
+        $user->email  =  $user->email ?? $user->phone_number . "@" . config("app.name") . ".com";
         $user->account  =  $user->account ?? $user->phone_number;
     }
 }
