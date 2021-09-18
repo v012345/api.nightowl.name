@@ -178,6 +178,11 @@ return [
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /**
+         * Meteor add Service Providers...
+         */
+        App\Providers\EasySmsServiceProvider::class,
+
     ],
 
     /*
