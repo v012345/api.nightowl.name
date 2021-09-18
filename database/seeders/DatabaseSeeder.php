@@ -19,10 +19,10 @@ class DatabaseSeeder extends Seeder
         // Model::unguard();
 
         $this->call(UsersTableSeeder::class);
-        $this->call(BlogsTableSeeder::class);
-        $this->call(FollowersTableSeeder::class);
-        $this->call(TopicsTableSeeder::class);
-        $this->call(RepliesTableSeeder::class);
+        // $this->call(BlogsTableSeeder::class);
+        // $this->call(FollowersTableSeeder::class);
+        // $this->call(TopicsTableSeeder::class);
+        // $this->call(RepliesTableSeeder::class);
         // Model::reguard();
     }
 }

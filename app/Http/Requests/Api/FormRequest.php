@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Api;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest as BaseFormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class FormRequest extends BaseFormRequest
 {
@@ -26,5 +28,10 @@ class FormRequest extends BaseFormRequest
         return [
             //
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json(["message" => "Wrong params", "errors" => $validator->errors()->all()], 422));
     }
 }

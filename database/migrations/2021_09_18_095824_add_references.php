@@ -22,6 +22,10 @@ class AddReferences extends Migration
             $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
             $table->foreign("topic_id")->references("id")->on("topics")->onDelete("cascade");
         });
+
+        Schema::table('notifications', function (Blueprint $table) {
+            $table->foreign("notifiable_id")->references("id")->on("users")->onDelete("cascade");
+        });
     }
 
     /**
@@ -38,6 +42,10 @@ class AddReferences extends Migration
         Schema::table('replies', function (Blueprint $table) {
             $table->dropForeign(["user_id"]);
             $table->dropForeign(["topic_id"]);
+        });
+
+        Schema::table('notifications', function (Blueprint $table) {
+            $table->dropForeign(["notifiable_id"]);
         });
     }
 }

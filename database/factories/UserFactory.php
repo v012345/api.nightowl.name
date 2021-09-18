@@ -31,17 +31,17 @@ class UserFactory extends Factory
         // ];
 
         return [
-            'name' => $this->faker->name(),
+            // 'name' => $this->faker->name(),
             // 'email' => $this->faker->unique()->email(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password,
+            // 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password,
             // 'email_verified_at' => now(),
-            'email_verified_at' => $this->faker->dateTime(),
+            // 'email_verified_at' => $this->faker->dateTime(),
             'phone_number' => $this->faker->unique()->phoneNumber(),
             // 'account' => $this->faker->unique()->userName(),
-            'introduction' => $this->faker->sentence(),
-            'avatar' => $this->faker->imageUrl(),
-            'updated_at' => $this->faker->dateTime(),
-            'created_at' => $this->faker->dateTime(),
+            // 'introduction' => $this->faker->sentence(),
+            // 'avatar' => $this->faker->imageUrl(),
+            // 'updated_at' => $this->faker->dateTime(),
+            // 'created_at' => $this->faker->dateTime(),
         ];
     }
 

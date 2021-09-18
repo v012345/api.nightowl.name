@@ -24,11 +24,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
-        'password',
-        'phone_number',
         'avatar',
-        'introduction'
+        'password',
+        'email',
+        'introduction',
+        "phone_number",
     ];
 
 
@@ -49,9 +49,10 @@ class User extends Authenticatable
      */
     protected $casts = [
         // 'email_verified_at' => 'datetime',
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime:Y-m-d H:i:s',
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
+        'last_actived_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     public function blogs()

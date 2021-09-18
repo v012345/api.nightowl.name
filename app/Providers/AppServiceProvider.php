@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Observers\ReplyObserver;
 use App\Observers\TopicObserver;
 use App\Observers\UserObserver;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,5 +34,6 @@ class AppServiceProvider extends ServiceProvider
         Topic::observe(TopicObserver::class);
         Reply::observe(ReplyObserver::class);
         User::observe(UserObserver::class);
+        JsonResource::withoutWrapping();
     }
 }

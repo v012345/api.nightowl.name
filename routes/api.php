@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\Verify;
+use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\VerificationCodesController;
 use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\FilesController;
@@ -8,7 +9,7 @@ use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\TopicsController;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UsersController as AdminsConstroller;
 use App\Jobs\TranslateSlug;
 use App\Models\Reply;
 use App\Models\Topic;
@@ -18,6 +19,7 @@ use Faker\Generator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -39,6 +41,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix("v1")->name("api.v1.")->group(function () {
     Route::post('verificationCodes', [VerificationCodesController::class, "store"])->name("verificationCodes.store");
+    Route::post('users', [UsersController::class, "store"])->name("user.store");
 });
 
 Route::prefix('vue3learning/v2')->group(function () {
@@ -190,6 +193,9 @@ Route::prefix('vue3learning/v2')->group(function () {
         // return $user;
         // dd(Topic::truncate());
         // dd(User::find([1, 2, 4])->get(1));
+        // return Hash::make("password");
+        // return bcrypt("password");
+        // return encrypt("password");
         return now()->addMinutes(5);
         return Carbon::now()->toDateString();
         Carbon::now()->format("Y-m-d H:i:s");
