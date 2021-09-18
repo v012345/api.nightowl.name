@@ -40,8 +40,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix("v1")->name("api.v1.")->group(function () {
-    Route::post('verificationCodes', [VerificationCodesController::class, "store"])->name("verificationCodes.store");
-    Route::post('users', [UsersController::class, "store"])->name("user.store");
+
+    Route::middleware(["throttle:" . config('api.rate_limits.sign')])->group(function () {
+        Route::post('verificationCodes', [VerificationCodesController::class, "store"])->name("verificationCodes.store");
+        Route::post('users', [UsersController::class, "store"])->name("user.store");
+    });
+    Route::middleware(["throttle:" . config("api.rate_limits.access")])->group(function () {
+    });
 });
 
 Route::prefix('vue3learning/v2')->group(function () {
