@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('nightowl:lucky_stars')->hourly();
+        $schedule->command('nightowl:lucky_stars:sync_user_actived_at')->dailyAt('01:00');
     }
 
     /**
@@ -35,7 +36,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

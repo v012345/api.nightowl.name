@@ -12,6 +12,7 @@ use App\Jobs\TranslateSlug;
 use App\Models\Reply;
 use App\Models\Topic;
 use App\Models\User;
+use Carbon\Carbon;
 use Faker\Generator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -184,6 +185,9 @@ Route::prefix('vue3learning/v2')->group(function () {
         // return $user;
         // dd(Topic::truncate());
         // dd(User::find([1, 2, 4])->get(1));
+        return now();
+        return Carbon::now()->toDateString();
+         Carbon::now()->format("Y-m-d H:i:s");
     });
 });
 Route::get("google_access_token", function (Request $request) {
