@@ -14,6 +14,7 @@ use App\Models\Topic;
 use App\Models\User;
 use Faker\Generator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('vue3learning/v2')->group(function () {
+    Route::post('lucky_stars', function () {
+        return array("code" => 200, "msg" => "OK", "lucky_stars"=>Cache::get('lucky_stars', null));
+    });
     Route::post('users', [UsersController::class, 'all']);
     Route::prefix('user')->group(function () {
         Route::post('signup', [UsersController::class, 'signup']);
@@ -178,7 +182,8 @@ Route::prefix('vue3learning/v2')->group(function () {
         // $user = User::find(9);
         // $user->notifications->paginate(2);
         // return $user;
-        dd(Topic::truncate());
+        // dd(Topic::truncate());
+        // dd(User::find([1, 2, 4])->get(1));
     });
 });
 Route::get("google_access_token", function (Request $request) {
