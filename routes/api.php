@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\Verify;
+use App\Http\Controllers\Api\VerificationCodesController;
 use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\FilesController;
 use App\Http\Controllers\MessagesController;
@@ -36,9 +37,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::prefix("v1")->name("api.v1.")->group(function () {
+    Route::post('verificationCodes', [VerificationCodesController::class, "store"])->name("verificationCodes.store");
+});
+
 Route::prefix('vue3learning/v2')->group(function () {
     Route::post('lucky_stars', function () {
-        return array("code" => 200, "msg" => "OK", "lucky_stars"=>Cache::get('lucky_stars', null));
+        return array("code" => 200, "msg" => "OK", "lucky_stars" => Cache::get('lucky_stars', null));
     });
     Route::post('users', [UsersController::class, 'all']);
     Route::prefix('user')->group(function () {
@@ -185,9 +190,9 @@ Route::prefix('vue3learning/v2')->group(function () {
         // return $user;
         // dd(Topic::truncate());
         // dd(User::find([1, 2, 4])->get(1));
-        return now();
+        return now()->addMinutes(5);
         return Carbon::now()->toDateString();
-         Carbon::now()->format("Y-m-d H:i:s");
+        Carbon::now()->format("Y-m-d H:i:s");
     });
 });
 Route::get("google_access_token", function (Request $request) {
