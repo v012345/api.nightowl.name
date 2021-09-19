@@ -23,7 +23,7 @@ class VerificationCodesController extends Controller
             return response(["message" => "Captcha has expired"], 403);
         }
 
-        if (!hash_equals($captchaData["captcha_value"], $request-> captcha_value)) {
+        if (!hash_equals($captchaData["captcha_value"], $request->captcha_value)) {
             // throw new AuthenticationException("Verification code is wrong");
             Cache::forget($request->captcha_key);
             return response(["message" => "Captcha value is wrong"], 403);
@@ -44,8 +44,9 @@ class VerificationCodesController extends Controller
                 ]);
             } catch (NoGatewayAvailableException $e) {
                 $message = $e->getException('aliyun')->getMessage();
-                return $message;
-                abort(500, $message ?: '短信发送异常');
+                return ["errors" => [$message]];
+                // return $message;
+                // abort(500, $message ?: '短信发送异常');
             }
         }
 
