@@ -32,15 +32,14 @@ class VerificationCodesController extends Controller
         $phone_number = $captchaData["phone_number"];
         Cache::forget($request->captcha_key);
 
-        if (!app()->environment("production")) {
+        if (app()->environment("production")) {
             $verification_code = "1234";
         } else {
             $verification_code = str_pad(random_int(1, 9999), 4, 0, STR_PAD_LEFT);
-
             try {
                 $result = $easySms->send($phone_number, [
                     'template' => config("easysms.gateways.aliyun.templates.verification_code"),
-                    "data" => ["verification_code" => $verification_code]
+                    "data" => ["code" => $verification_code]
                 ]);
             } catch (NoGatewayAvailableException $e) {
                 $message = $e->getException('aliyun')->getMessage();
