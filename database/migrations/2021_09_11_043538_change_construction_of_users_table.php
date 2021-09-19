@@ -18,7 +18,7 @@ class ChangeConstructionOfUsersTable extends Migration
             $table->string("name")->nullable()->change();
             $table->string('avatar')->nullable();
             $table->string("account")->nullable()->unique()->index();
-            $table->string('phone_number')->unique()->index()->after("name");
+            $table->string('phone_number')->unique()->nullable()->index()->after("name");
             $table->string('email')->change()->index()->nullable();
             $table->string('introduction')->nullable();
             $table->integer('notification_count')->nullable()->unsigned()->default(0);
