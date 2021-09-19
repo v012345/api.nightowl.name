@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Overtrue\LaravelSocialite\Socialite;
 
+use function PHPSTORM_META\type;
+
 class AuthorizationsController extends Controller
 {
     //
@@ -48,7 +50,7 @@ class AuthorizationsController extends Controller
             //throw $th;
         }
         if (!$oauthUser->getId()) {
-            return ['参数错误，未获取用户信息'];
+            return response(["worrg password"], 401);
         }
         switch ($social_type) {
             case 'wechat':
@@ -71,8 +73,29 @@ class AuthorizationsController extends Controller
                 break;
         }
 
-        $token = Auth::guard('api')->login($user);
+        $token = auth('api')->login($user);
         return $this->respondWithToken($token)->setStatusCode(201);
+    }
+
+    public function update(Request $request)
+    {
+        try {
+            $token = auth('api')->refresh();
+        } catch (Exception $e) {
+            return response(["errors" => [$e->getMessage()]], 401);
+        }
+
+        return $this->respondWithToken($token);
+    }
+
+    public function destroy()
+    {
+        try {
+            auth('api')->logout();
+        } catch (Exception $e) {
+            return response(["errors" => [$e->getMessage()]], 401);
+        }
+        return response(null, 204);
     }
 
     protected function respondWithToken($token)

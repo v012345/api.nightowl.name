@@ -19,12 +19,14 @@ use App\Models\User;
 use Carbon\Carbon;
 use Faker\Generator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +51,8 @@ Route::prefix("v1")->name("api.v1.")->group(function () {
         Route::post("captchas", [CaptchasController::class, "store"])->name("captchas.store");
         Route::post("socials/{social_type}/authorizations", [AuthorizationsController::class, "socialStore"])->where('social_type', 'wechat|weibo')->name("social.authorizations.store");
         Route::post("authorizations", [AuthorizationsController::class, "store"])->name("authorizations.store");
+        Route::put("authorizations/current", [AuthorizationsController::class, "update"])->name("authorizations.update");
+        Route::delete("authorizations/current", [AuthorizationsController::class, "destory"])->name("authorizations.destroy");
     });
     Route::middleware(["throttle:" . config("api.rate_limits.access")])->group(function () {
     });
@@ -113,7 +117,15 @@ Route::prefix('vue3learning/v2')->group(function () {
 
 
 
-    Route::any('/test', function (Request $request) {
+    Route::any('/test', function (Request $request, Test $t) {
+        // return $t->show();
+        $t = App::makeWith(Test2::class, ["b" => 10]);
+        App::extend(Test2::class, function ($test2, $app) {
+            return  $app->makeWith(Test3::class, ["b" => $test2]);
+        });
+        $t = App::makeWith(Test2::class);
+        // dd(app());
+        dd($t);
         // return view('welcome');
         // return $request->method();
         // $user = new User();
@@ -206,12 +218,63 @@ Route::prefix('vue3learning/v2')->group(function () {
         // return Hash::make("password");
         // return bcrypt("password");
         // return encrypt("password");
-        return now()->addMinutes(5);
-        return Carbon::now()->toDateString();
-        Carbon::now()->format("Y-m-d H:i:s");
+        // return now()->addMinutes(5);
+        // return Carbon::now()->toDateString();
+        // Carbon::now()->format("Y-m-d H:i:s");
+        // return JWTSubject::class;
+
+
     });
 });
 Route::get("google_access_token", function (Request $request) {
     Redis::setex("google_auth_code", 3600, $request->code);
     return 200;
 });
+
+class Test
+{
+    public $a;
+    public function __construct($reports)
+    {
+        $this->a = $reports;
+    }
+    public function show()
+    {
+        return $this->a;
+    }
+}
+
+
+class Test1
+{
+    private $a;
+    public function __construct($b)
+    {
+        $this->a = $b;
+    }
+    public function getter($name)
+    {
+        return $this->$name;
+    }
+}
+class Test2
+{
+    public $a;
+    public function __construct($b)
+    {
+        $this->a = $b;
+    }
+    public function getter($name)
+    {
+        return $this->$name;
+    }
+}
+
+class Test3
+{
+    public $a;
+    public function __construct($b)
+    {
+        $this->a = $b;
+    }
+}

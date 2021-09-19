@@ -11,6 +11,9 @@ use App\Observers\UserObserver;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 use Overtrue\EasySms\EasySms;
+use Test;
+use Test1;
+use Test2;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,6 +35,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        
+        $this->app->when(Test1::class)->needs('$b')->give(100);
+        $this->app->when(Test2::class)->needs('$b')->give(50);
+        $this->app->tag([Test1::class, Test2::class], 'reports');
+        $this->app->when(Test::class)->needs('$reports')->giveTagged('reports');
         $this->app->singleton(EasySms::class, function ($app) {
             return new EasySms(config('easysms'));
         });

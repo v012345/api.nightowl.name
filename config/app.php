@@ -181,7 +181,7 @@ return [
         /**
          * Meteor add Service Providers...
          */
-        App\Providers\EasySmsServiceProvider::class,
+        // App\Providers\EasySmsServiceProvider::class,
 
     ],
 
