@@ -48,7 +48,7 @@ Route::prefix("v1")->name("api.v1.")->group(function () {
         Route::post('users', [UsersController::class, "store"])->name("user.store");
         Route::post("captchas", [CaptchasController::class, "store"])->name("captchas.store");
         Route::post("socials/{social_type}/authorizations", [AuthorizationsController::class, "socialStore"])->where('social_type', 'wechat|weibo')->name("social.authorizations.store");
-        
+        Route::post("authorizations", [AuthorizationsController::class, "store"])->name("authorizations.store");
     });
     Route::middleware(["throttle:" . config("api.rate_limits.access")])->group(function () {
     });

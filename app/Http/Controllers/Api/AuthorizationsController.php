@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+
+use App\Http\Requests\Api\AuthorizationRequest;
 use App\Http\Requests\Api\SocialAuthorizationRequest;
 use App\Models\User;
 use Exception;
@@ -12,6 +13,19 @@ use Overtrue\LaravelSocialite\Socialite;
 class AuthorizationsController extends Controller
 {
     //
+    public function store(AuthorizationRequest $request)
+    {
+        $username = $request->username;
+        if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+            $credentials["email"] = $username;
+        } elseif (preg_match('/[^0-9]+/', $username)) {
+            $credentials["account"] = $username;
+        } else {
+            $credentials["phone_number"] = $username;
+        }
+        $credentials['password'] = $request->password;
+        
+    }
     public function socialStore(SocialAuthorizationRequest $request, $social_type)
     {
         $driver = Socialite::create($social_type);
