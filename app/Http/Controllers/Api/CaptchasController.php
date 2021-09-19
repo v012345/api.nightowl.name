@@ -21,3 +21,6 @@ class CaptchasController extends Controller
         return response(["captcha_key" => $captcha_key, "expired_at" => $expiredAt->format("Y-m-d H:i:s"), "captcha_image_content" => $captcha->inline()], 201);
     }
 }
+
+
+sbsbsbsbsbs
