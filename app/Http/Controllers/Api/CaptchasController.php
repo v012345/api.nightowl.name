@@ -17,7 +17,7 @@ class CaptchasController extends Controller
         $captcha_key = 'captcha-' . Str::random(15);
         $captcha = $captchaBuilder->build();
         $expiredAt = Carbon::now()->addMinutes(2);
-        Cache::put($captcha_key, ["phone_number" => $request->phone_number, "captcha_value" => $captcha->getPhrase()], $expiredAt);
+        Cache::put($captcha_key, ["phone_number" => $request->phone_number, "captcha_value" => Str::lower($captcha->getPhrase())], $expiredAt);
         return response(["captcha_key" => $captcha_key, "expired_at" => $expiredAt->format("Y-m-d H:i:s"), "captcha_image_content" => $captcha->inline()], 201);
     }
 }
