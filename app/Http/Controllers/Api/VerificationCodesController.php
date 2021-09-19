@@ -15,7 +15,23 @@ class VerificationCodesController extends Controller
     //
     public function store(VerificationCodeRequest $request, EasySms $easySms)
     {
-        $phone_number = $request->phone_number;
+
+
+        $captchaData = Cache::get($request->captcha_key);
+        if (!$captchaData) {
+            // abort(403, "Verification code has expired");
+            return response(["message" => "Captcha has expired"], 403);
+        }
+
+        if (!hash_equals($captchaData["captcha_value"], $request-> captcha_value)) {
+            // throw new AuthenticationException("Verification code is wrong");
+            Cache::forget($request->captcha_key);
+            return response(["message" => "Captcha value is wrong"], 403);
+        }
+
+        $phone_number = $captchaData["phone_number"];
+        Cache::forget($request->captcha_key);
+
         if (!app()->environment("production")) {
             $verification_code = "1234";
         } else {
