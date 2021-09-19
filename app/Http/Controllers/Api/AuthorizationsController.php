@@ -8,6 +8,7 @@ use App\Http\Requests\Api\SocialAuthorizationRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Overtrue\LaravelSocialite\Socialite;
 
 class AuthorizationsController extends Controller
@@ -24,7 +25,11 @@ class AuthorizationsController extends Controller
             $credentials["phone_number"] = $username;
         }
         $credentials['password'] = $request->password;
-        
+        if (!$token = Auth::guard('api')->attempt($credentials)) {
+            return response(array(["wrong password"]), 403);
+        }
+
+        return $this->respondWithToken($token)->setStatusCode(201);
     }
     public function socialStore(SocialAuthorizationRequest $request, $social_type)
     {
@@ -66,6 +71,16 @@ class AuthorizationsController extends Controller
                 break;
         }
 
-        return $user;
+        $token = Auth::guard('api')->login($user);
+        return $this->respondWithToken($token)->setStatusCode(201);
+    }
+
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
+        ]);
     }
 }

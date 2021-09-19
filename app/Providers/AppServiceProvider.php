@@ -10,6 +10,7 @@ use App\Observers\TopicObserver;
 use App\Observers\UserObserver;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
+use Overtrue\EasySms\EasySms;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        $this->app->singleton(EasySms::class, function ($app) {
+            return new EasySms(config('easysms'));
+        });
+        $this->app->alias(EasySms::class, "easysms");
+
         Topic::observe(TopicObserver::class);
         Reply::observe(ReplyObserver::class);
         User::observe(UserObserver::class);

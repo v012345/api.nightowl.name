@@ -77,16 +77,16 @@ class Kernel extends HttpKernel
         'FormatPaginatedResults' => \App\Http\Middleware\FormatPaginatedResults::class,
     ];
 
-    /**
-     * The priority-sorted list of middleware.
-     *
-     * This forces non-global middleware to always be in the given order.
-     *
-     * @var array
-     */
-    protected $middlewarePriority = [
-        // \App\Http\Middleware\DecryptUserInfo::class,
-        \App\Http\Middleware\VerifyToken::class,
-        \App\Http\Middleware\ValidateUserInfo::class,
-    ];
+    // /**
+    //  * The priority-sorted list of middleware.
+    //  *
+    //  * This forces non-global middleware to always be in the given order.
+    //  *
+    //  * @var array
+    //  */
+    // protected $middlewarePriority = [
+    //     // \App\Http\Middleware\DecryptUserInfo::class,
+    //     \App\Http\Middleware\VerifyToken::class,
+    //     \App\Http\Middleware\ValidateUserInfo::class,
+    // ];
 }

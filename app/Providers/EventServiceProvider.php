@@ -23,12 +23,6 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        Verify::class => [
-            SendVerificationCode::class,
-        ],
-        GoogleAccessTokenExpired::class => [
-            SendNotificationToAdmin::class
-        ]
     ];
 
     /**
