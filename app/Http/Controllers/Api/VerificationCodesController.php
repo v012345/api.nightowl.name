@@ -44,6 +44,7 @@ class VerificationCodesController extends Controller
                 ]);
             } catch (NoGatewayAvailableException $e) {
                 $message = $e->getException('aliyun')->getMessage();
+                return $message;
                 abort(500, $message ?: '短信发送异常');
             }
         }
