@@ -45,11 +45,11 @@ class ChangeConstructionOfUsersTable extends Migration
             $table->dropColumn('introduction');
             $table->dropColumn("notification_count");
             $table->dropColumn("last_actived_at");
-            $table->string("email")->nullable(false)->change();
-            $table->string("password")->change()->nullable(false);
+            // $table->string("email")->nullable(false)->change();
+            // $table->string("password")->change()->nullable(false);
             $table->dropColumn("follower_count");
             $table->dropColumn("following_count");
-            $table->string("name")->nullable(false)->change();
+            // $table->string("name")->nullable(false)->change();
         });
     }
 }
