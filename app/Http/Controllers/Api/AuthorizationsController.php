@@ -8,4 +8,8 @@ use Illuminate\Http\Request;
 class AuthorizationsController extends Controller
 {
     //
+    public function socialStore(Request $request)
+    {
+        return $request->all();
+    }
 }

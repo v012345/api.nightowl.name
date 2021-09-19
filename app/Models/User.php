@@ -29,6 +29,8 @@ class User extends Authenticatable
         'email',
         'introduction',
         "phone_number",
+        'weixin_openid',
+        'weixin_unionid',
     ];
 
 
