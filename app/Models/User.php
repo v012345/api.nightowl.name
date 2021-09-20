@@ -22,7 +22,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims()
     {
-        return ["a" => 123];
+        return [];
     }
 
     /**
@@ -50,6 +50,8 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
         'remember_token',
+        'weixin_openid',
+        'weixin_unionid',
     ];
 
     /**
