@@ -52,9 +52,13 @@ Route::prefix("v1")->name("api.v1.")->group(function () {
         Route::post("socials/{social_type}/authorizations", [AuthorizationsController::class, "socialStore"])->where('social_type', 'wechat|weibo')->name("social.authorizations.store");
         Route::post("authorizations", [AuthorizationsController::class, "store"])->name("authorizations.store");
         Route::put("authorizations/current", [AuthorizationsController::class, "update"])->name("authorizations.update");
-        Route::delete("authorizations/current", [AuthorizationsController::class, "destory"])->name("authorizations.destroy");
+        Route::delete("authorizations/current", [AuthorizationsController::class, "destroy"])->name("authorizations.destroy");
     });
     Route::middleware(["throttle:" . config("api.rate_limits.access")])->group(function () {
+        Route::get("users/{user}", [UsersController::class, "show"])->name("users.show");
+        Route::middleware("auth:api")->group(function () {
+            Route::get("user", [UsersController::class, "me"])->name("user.show");
+        });
     });
 });
 
