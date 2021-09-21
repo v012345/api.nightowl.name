@@ -123,6 +123,8 @@ Route::prefix('vue3learning/v2')->group(function () {
 
     Route::any('/test', function (Request $request, Test $t) {
         // return $t->show();
+// return 1;
+        return app("weather")->getWeather("大连");
         $t = App::makeWith(Test2::class, ["b" => 10]);
         App::extend(Test2::class, function ($test2, $app) {
             return  $app->makeWith(Test3::class, ["b" => $test2]);
