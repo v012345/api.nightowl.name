@@ -27,6 +27,8 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Upyun\Config;
+use Upyun\Upyun;
 
 /*
 |--------------------------------------------------------------------------
@@ -122,8 +124,13 @@ Route::prefix('vue3learning/v2')->group(function () {
 
 
     Route::any('/test', function (Request $request, Test $t) {
+  
+        $client = new Upyun($bucketConfig);
+
+        dd($client->read("/wechat/uploads/images/avatars/202107/26"));
+
         // return $t->show();
-// return 1;
+        // return 1;
         return app("weather")->getWeather("大连");
         $t = App::makeWith(Test2::class, ["b" => 10]);
         App::extend(Test2::class, function ($test2, $app) {

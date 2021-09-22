@@ -23,7 +23,8 @@
         "overtrue/easy-sms": "^1.3",
         "overtrue/laravel-socialite": "^3.0",
         "propaganistas/laravel-phone": "^4.3",
-        "tymon/jwt-auth": "^1.0"
+        "tymon/jwt-auth": "^1.0",
+        "v012345/upyun": "^4.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

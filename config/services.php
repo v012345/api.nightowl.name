@@ -45,4 +45,11 @@ return [
         'key' => env('WEATHER_API_KEY'),
     ],
 
+    'upyun' => [
+        'operator' => env('UPYUN_OPERATOR'),
+        'password' => env('UPYUN_PASSWORD'),
+        'bucket' => "jpmp3",
+        'domain' => "https://foo.ibianma.com/",
+    ],
+
 ];
