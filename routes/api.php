@@ -19,5 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get("{any}", function (Request $request) {
-    return $request->path();
+    return "@@@@@@@".$request->path();
 })->where('any', '.*');
