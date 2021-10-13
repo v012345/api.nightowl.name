@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'Asia/Shanghai',
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,8 +80,7 @@ return [
     |
     */
 
-    // 'locale' => 'en',
-    'locale' => 'zh_CN',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -107,8 +106,7 @@ return [
     |
     */
 
-    // 'faker_locale' => 'en_US',
-    'faker_locale' => 'zh_CN',
+    'faker_locale' => 'en_US',
 
     /*
     |--------------------------------------------------------------------------
@@ -175,13 +173,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-        /**
-         * Meteor add Service Providers...
-         */
-        // App\Providers\EasySmsServiceProvider::class,
 
     ],
 

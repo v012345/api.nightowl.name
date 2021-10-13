@@ -30,26 +30,4 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'baidu_translate' => [
-        'appid' => env('BAIDU_TRANSLATE_APPID'),
-        'key'   => env('BAIDU_TRANSLATE_KEY'),
-    ],
-
-    'wechat' => [
-        'client_id' => env('WEIXIN_KEY'),
-        'client_secret' => env('WEIXIN_SECRET'),
-        'redirect' => env('WEIXIN_REDIRECT_URI'),
-    ],
-
-    'weather' => [
-        'key' => env('WEATHER_API_KEY'),
-    ],
-
-    'upyun' => [
-        'operator' => env('UPYUN_OPERATOR'),
-        'password' => env('UPYUN_PASSWORD'),
-        'bucket' => "jpmp3",
-        'domain' => "https://foo.ibianma.com/",
-    ],
-
 ];

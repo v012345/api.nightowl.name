@@ -43,13 +43,7 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\RecordLastActivedTime::class,
-            \App\Http\Middleware\AcceptHeader::class,
         ],
-        // 'token' => [
-        //     \App\Http\Middleware\GenerateToken::class,
-        //     \App\Http\Middleware\VerifyToken::class,
-        // ],
     ];
 
     /**
@@ -69,24 +63,5 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        // 'EncryptUserInfo' => \App\Http\Middleware\EncryptUserInfo::class,
-        // 'DecryptUserInfo' => \App\Http\Middleware\DecryptUserInfo::class,
-        'ValidateUserInfo' => \App\Http\Middleware\ValidateUserInfo::class,
-        'VerifyToken' => \App\Http\Middleware\VerifyToken::class,
-        'GenerateToken' => \App\Http\Middleware\GenerateToken::class,
-        'FormatPaginatedResults' => \App\Http\Middleware\FormatPaginatedResults::class,
     ];
-
-    // /**
-    //  * The priority-sorted list of middleware.
-    //  *
-    //  * This forces non-global middleware to always be in the given order.
-    //  *
-    //  * @var array
-    //  */
-    // protected $middlewarePriority = [
-    //     // \App\Http\Middleware\DecryptUserInfo::class,
-    //     \App\Http\Middleware\VerifyToken::class,
-    //     \App\Http\Middleware\ValidateUserInfo::class,
-    // ];
 }

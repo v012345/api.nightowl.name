@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,13 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (Request $request) {
-    return $request->all();
+Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/test', function (Request $request) {
-    return "test";
-    return view('welcome');
-});
-
