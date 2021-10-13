@@ -18,9 +18,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get("api2", function (Request $request) {
-    return $request->path();
-});
-Route::get("/", function (Request $request) {
+Route::get("*", function (Request $request) {
     return $request->path();
 });
