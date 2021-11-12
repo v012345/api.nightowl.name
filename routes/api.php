@@ -25,7 +25,7 @@ Route::get("{any}", function (Request $request) {
 
 Route::post("hotfix", function (Request $request) {
 
-
+    return base_path();
 
 
 
@@ -38,6 +38,8 @@ Route::post("hotfix", function (Request $request) {
     if (hash_equals($x_hub_signature_256, $signature)) {
         //通过验签
         Log::debug("通过验签");
+        $base_path = 1;
+        shell_exec("git -C");
     }
 });
 
