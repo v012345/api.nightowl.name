@@ -31,6 +31,6 @@ Route::post("hotfix", function (Request $request) {
 });
 
 Route::get("test", function (Request $request) {
-    echo "git -C " . base_path() . " pull origin master";
-    return shell_exec("git -C " . base_path() . " pull origin master");
+    // echo "git -C " . base_path() . " pull origin master";
+    dd(exec("git -C " . base_path() . " pull origin master"));
 });
