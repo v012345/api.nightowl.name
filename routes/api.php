@@ -24,22 +24,12 @@ Route::get("{any}", function (Request $request) {
 })->where('any', '.*');
 
 Route::post("hotfix", function (Request $request) {
-
-    return base_path();
-
-
-
-    Log::debug("-------------------------");
-
     // Log::debug($request);
-
     $x_hub_signature_256 = $request->header("x-hub-signature-256");
-    $signature = "sha256=" . hash_hmac("sha256", $request->getContent(), "github webhook secret");
+    $signature = "sha256=" . hash_hmac("sha256", $request->getContent(), config("github.secret"));
     if (hash_equals($x_hub_signature_256, $signature)) {
         //通过验签
-        Log::debug("通过验签");
-        $base_path = 1;
-        shell_exec("git -C");
+        Log::debug(shell_exec("git -C " . base_path() . " pull origin master"));
     }
 });
 
