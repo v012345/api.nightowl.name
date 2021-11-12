@@ -36,3 +36,5 @@ Route::get("test", function (Request $request) {
     // echo "git -C " . base_path() . " pull origin master";
     echo shell_exec("sudo " . base_path() . "/scripts/gitpull.sh " . base_path());
 });
+
+//..
