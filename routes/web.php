@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get("migrate", function (Request $request) {
-    $cmd = "php " . base_path() . "/artisan migrate";
-    echo "bash " . base_path() . "/scripts/sudo.sh " . $cmd;
-    echo shell_exec("bash " . base_path() . "/scripts/sudo.sh " . $cmd);
+
+    echo "bash " . base_path() . "/scripts/sudo.sh " . base_path() . "/artisan";
+    echo shell_exec("bash " . base_path() . "/scripts/sudo.sh " . base_path() . "/artisan");
 });
