@@ -35,6 +35,7 @@ Route::get("test", function (Request $request) {
     echo shell_exec("pwd");
     // echo "git -C " . base_path() . " pull origin master";
     echo "bash " . base_path() . "/scripts/gitpull.sh " . base_path();
+    echo "<br>---";
     echo shell_exec("bash " . base_path() . "/scripts/gitpull.sh " . base_path());
 });
 
