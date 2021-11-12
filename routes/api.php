@@ -24,9 +24,24 @@ Route::get("{any}", function (Request $request) {
 })->where('any', '.*');
 
 Route::post("hotfix", function (Request $request) {
+
+
+
+
+
     Log::debug("-------------------------");
-    Log::debug($request->header());
-    Log::debug($request);
+
+    // Log::debug($request);
+
+    $x_hub_signature_256 = $request->header("x-hub-signature-256");
+    Log::debug($x_hub_signature_256);
+    $signature = hash_hmac("sha256", $request->getContent(), "56cbb2381a1b95c66c2e28ae65bbe9b251a76c88");
+    Log::debug($signature);
+    if (hash_equals($x_hub_signature_256, $signature)) {
+        Log::debug("equals");
+    } else {
+        Log::debug("<><><><><><><><>");
+    }
 });
 
 
