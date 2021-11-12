@@ -37,7 +37,7 @@ Route::get("test", function (Request $request) {
     echo "bash " . base_path() . "/scripts/gitpull.sh " . base_path();
     echo "<br>---";
 
-    echo shell_exec(base_path() . "/scripts/gitpull.sh " . base_path());
+    echo shell_exec("bash " . base_path() . "/scripts/gitpull.sh " . base_path());
 });
 
 //..
