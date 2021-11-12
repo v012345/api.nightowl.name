@@ -27,3 +27,7 @@ Route::post("hotfix", function (Request $request) {
         echo shell_exec("bash " . base_path() . "/scripts/gitpull.sh " . base_path());
     }
 });
+
+Route::post('test', function (Request $request) {
+    return $request->all();
+});
