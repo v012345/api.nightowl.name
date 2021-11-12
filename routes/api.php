@@ -34,13 +34,10 @@ Route::post("hotfix", function (Request $request) {
     // Log::debug($request);
 
     $x_hub_signature_256 = $request->header("x-hub-signature-256");
-    Log::debug($x_hub_signature_256);
-    $signature = hash_hmac("sha256", $request->getContent(), "56cbb2381a1b95c66c2e28ae65bbe9b251a76c88");
-    Log::debug($signature);
+    $signature = "sha256=" . hash_hmac("sha256", $request->getContent(), "github webhook secret");
     if (hash_equals($x_hub_signature_256, $signature)) {
-        Log::debug("equals");
-    } else {
-        Log::debug("<><><><><><><><>");
+        //通过验签
+        Log::debug("通过验签");
     }
 });
 
