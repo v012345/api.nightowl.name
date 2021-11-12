@@ -24,6 +24,8 @@ Route::get("{any}", function (Request $request) {
 })->where('any', '.*');
 
 Route::post("hotfix", function (Request $request) {
+    Log::debug("-------------------------");
+    Log::debug($request->header());
     Log::debug($request);
 });
 
