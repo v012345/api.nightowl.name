@@ -20,6 +20,6 @@ Route::get('/', function () {
 
 Route::get("migrate", function (Request $request) {
 
-    echo "bash " . base_path() . "/scripts/sudo.sh " . base_path() . "/artisan";
-    echo shell_exec("bash " . base_path() . "/scripts/sudo.sh " . base_path() . "/artisan");
+    echo "bash " . base_path() . "/scripts/migrate.sh " . base_path() . "/artisan";
+    echo shell_exec("bash " . base_path() . "/scripts/migrate.sh " . base_path() . "/artisan");
 });
