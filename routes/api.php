@@ -31,7 +31,8 @@ Route::post("hotfix", function (Request $request) {
 });
 
 Route::get("test", function (Request $request) {
-    echo exec("ll");
+    echo exec("whoami");
+    echo exec("pwd");
     // echo "git -C " . base_path() . " pull origin master";
-    dd(exec("git -C " . base_path() . " pull origin master"));
+    // dd(exec("git -C " . base_path() . " pull origin master"));
 });
