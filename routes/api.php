@@ -32,8 +32,3 @@ Route::post("hotfix", function (Request $request) {
         Log::debug(shell_exec("git -C " . base_path() . " pull origin master"));
     }
 });
-
-
-//bbbbbbbbbbbbbbbbbbbbbbbb
-//cccccccccccccccccc
-//ddddddddd
