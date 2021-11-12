@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get("migrate", function (Request $request) {
+    $cmd = "php " . base_path() . "/artisan migrate";
+    echo shell_exec("bash " . base_path() . "/scripts/sudo.sh " . $cmd);
+});
