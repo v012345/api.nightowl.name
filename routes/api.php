@@ -19,9 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get("{any}", function (Request $request) {
-    return "@@@@@@@" . $request->path();
-})->where('any', '.*');
 
 Route::post("hotfix", function (Request $request) {
     // Log::debug($request);
