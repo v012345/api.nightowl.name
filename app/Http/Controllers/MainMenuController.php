@@ -32,4 +32,11 @@ class MainMenuController extends Controller
         $mainMenu->delete();
         return response("", 200);
     }
+
+    public function update(MainMenu $mainMenu, Request $request)
+    {
+        $mainMenu->payload = json_encode($request->all());
+        $mainMenu->save();
+        return response("", 200);
+    }
 }
