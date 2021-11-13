@@ -40,7 +40,11 @@ Route::prefix("v1")->group(function () {
     Route::prefix("backend")->group(function () {
         Route::post("main_menus", function (Request $request) {
             // return $request->all();
-            return MainMenu::create(["payload" => json_encode($request->all())]);
+            try {
+                response(MainMenu::create(["payload" => json_encode($request->all())]), 201);
+            } catch (Exception $e) {
+                response($e->getMessage(), 400);
+            }
         });
     });
 });
