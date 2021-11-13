@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\MainMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -32,4 +33,12 @@ Route::post("hotfix", function (Request $request) {
 
 Route::post('test', function (Request $request) {
     return $request->all();
+});
+
+Route::prefix("v1")->group(function () {
+    Route::prefix("backend")->group(function () {
+        Route::post("main_menus", function (Request $request) {
+            return MainMenu::create(["data" => $request->all()]);
+        });
+    });
 });
