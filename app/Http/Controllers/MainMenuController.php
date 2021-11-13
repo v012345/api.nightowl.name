@@ -20,6 +20,6 @@ class MainMenuController extends Controller
 
     public function read(MainMenu $mainMenu)
     {
-        return $$mainMenu;
+        return $mainMenu;
     }
 }
