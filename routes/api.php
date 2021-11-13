@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MainMenuController;
+use App\Models\MainMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,5 +40,6 @@ Route::prefix("v1")->group(function () {
     Route::prefix("backend")->group(function () {
         Route::post("main-menus", [MainMenuController::class, "create"]);
         Route::get("main-menus/{mainMenu?}", [MainMenuController::class, "read"]);
+        Route::delete("main-menus/{mainMenu?}", [MainMenuController::class, "delete"]);
     });
 });

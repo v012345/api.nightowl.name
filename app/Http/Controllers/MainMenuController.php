@@ -27,7 +27,13 @@ class MainMenuController extends Controller
         }
     }
 
-    public function delete()
+    public function delete(MainMenu $mainMenu)
     {
+        if ($mainMenu->exists) {
+            $mainMenu->delete();
+            return response("", 200);
+        } else {
+            return response("not exists", 400);
+        }
     }
 }
