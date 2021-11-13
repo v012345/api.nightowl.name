@@ -20,6 +20,7 @@ class MainMenuController extends Controller
 
     public function read(MainMenu $mainMenu, Request $request)
     {
+        return 123;
         if ($mainMenu->exists()) {
             return response($mainMenu, 200);
         } else {
