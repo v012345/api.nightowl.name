@@ -21,7 +21,7 @@ class MainMenuController extends Controller
     public function read(MainMenu $mainMenu, Request $request)
     {
         echo $request->page;
-        return MainMenu::all();
+        dd($mainMenu);
 
         if ($mainMenu) {
             return response($mainMenu, 200);
