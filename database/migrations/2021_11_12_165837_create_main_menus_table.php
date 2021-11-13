@@ -15,7 +15,7 @@ class CreateMainMenusTable extends Migration
     {
         Schema::create('main_menus', function (Blueprint $table) {
             $table->id();
-            $table->string("data");
+            $table->string("payload");
             $table->timestamps();
         });
     }
