@@ -13,7 +13,7 @@ class CreateMainMenuTable extends Migration
      */
     public function up()
     {
-        Schema::create('main_menu', function (Blueprint $table) {
+        Schema::create('main_menus', function (Blueprint $table) {
             $table->id();
             $table->string("data");
             $table->timestamps();
