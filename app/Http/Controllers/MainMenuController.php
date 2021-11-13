@@ -30,7 +30,7 @@ class MainMenuController extends Controller
     public function delete(MainMenu $mainMenu)
     {
         $mainMenu->delete();
-        return response("", 200);
+        return response("", 204);
     }
 
     public function update(MainMenu $mainMenu, Request $request)
