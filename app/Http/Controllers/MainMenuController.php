@@ -23,6 +23,7 @@ class MainMenuController extends Controller
         if ($mainMenu->exists()) {
             return response($mainMenu, 200);
         } else {
+            return 123;
             return response(MainMenu::paginate(), 200);
         }
     }
