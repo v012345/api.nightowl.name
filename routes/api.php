@@ -38,6 +38,6 @@ Route::post('test', function (Request $request) {
 Route::prefix("v1")->group(function () {
     Route::prefix("backend")->group(function () {
         Route::post("main_menus", [MainMenuController::class, "create"]);
-        Route::get("main_menus/{id?}", [MainMenuController::class, "read"]);
+        Route::get("main_menus/{main_menu?}", [MainMenuController::class, "read"]);
     });
 });
