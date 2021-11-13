@@ -26,4 +26,8 @@ class MainMenuController extends Controller
             return response(MainMenu::paginate($request->per_page ?? 10), 200);
         }
     }
+
+    public function delete()
+    {
+    }
 }
