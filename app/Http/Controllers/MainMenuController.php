@@ -18,8 +18,13 @@ class MainMenuController extends Controller
         }
     }
 
-    public function read(MainMenu $mainMenu)
+    public function read(MainMenu $mainMenu, Request $request)
     {
-        return $mainMenu;
+
+        if ($mainMenu) {
+            return response($mainMenu, 200);
+        } else {
+            return response(MainMenu::paginate($request->page));
+        }
     }
 }
