@@ -20,11 +20,12 @@ class MainMenuController extends Controller
 
     public function read(MainMenu $mainMenu, Request $request)
     {
-
+        echo $request->page;
         if ($mainMenu) {
             return response($mainMenu, 200);
         } else {
-            return response(MainMenu::paginate($request->page));
+            return MainMenu::all();
+            return response(MainMenu::paginate($request->page), 200);
         }
     }
 }
