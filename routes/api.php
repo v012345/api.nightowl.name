@@ -39,9 +39,8 @@ Route::post('test', function (Request $request) {
 Route::prefix("v1")->group(function () {
     Route::prefix("backend")->group(function () {
         Route::post("main_menus", function (Request $request) {
-            // return $request->all();
             try {
-                return  response(MainMenu::create(["payload" => json_encode($request->all())]), 201);
+                return  response(MainMenu::create(["payload1" => json_encode($request->all())]), 201);
             } catch (Exception $e) {
                 return response($e->getMessage(), 400);
             }
