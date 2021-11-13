@@ -1,10 +1,9 @@
 <?php
 
-use App\Models\MainMenu;
+use App\Http\Controllers\MainMenuController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
-use Nette\Utils\Json;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,12 +37,7 @@ Route::post('test', function (Request $request) {
 
 Route::prefix("v1")->group(function () {
     Route::prefix("backend")->group(function () {
-        Route::post("main_menus", function (Request $request) {
-            try {
-                return  response(MainMenu::create(["payload1" => json_encode($request->all())]), 201);
-            } catch (Exception $e) {
-                return response($e->getMessage(), 400);
-            }
-        });
+        Route::post("main_menus", [MainMenuController::class, "create"]);
+        Route::get("main_menus/{main_menu?}", [MainMenuController::class, "read"]);
     });
 });
