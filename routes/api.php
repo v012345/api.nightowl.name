@@ -4,6 +4,7 @@ use App\Models\MainMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Nette\Utils\Json;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,8 +39,8 @@ Route::post('test', function (Request $request) {
 Route::prefix("v1")->group(function () {
     Route::prefix("backend")->group(function () {
         Route::post("main_menus", function (Request $request) {
-            return $request->all();
-            return MainMenu::create(["data" => $request->all()]);
+            // return $request->all();
+            return MainMenu::create(["data" => json_encode($request->all())]);
         });
     });
 });
