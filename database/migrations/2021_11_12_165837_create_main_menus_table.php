@@ -27,6 +27,6 @@ class CreateMainMenusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('main_menu');
+        Schema::dropIfExists('main_menus');
     }
 }
