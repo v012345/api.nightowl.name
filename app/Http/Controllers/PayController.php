@@ -12,7 +12,7 @@ class PayController extends Controller
     {
         $result = Pay::alipay()->transfer([
             'out_biz_no' => "85574755447554",
-            'trans_amount' => '0.01',
+            'trans_amount' => '1.00',
             'product_code' => 'TRANS_ACCOUNT_NO_PWD',
             'biz_scene' => 'DIRECT_TRANSFER',
             'payee_info' => [
