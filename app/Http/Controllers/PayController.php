@@ -11,7 +11,7 @@ class PayController extends Controller
     public function transfer(Request $request)
     {
         $result = Pay::alipay()->transfer([
-            'out_biz_no' => "A" + time(),
+            'out_biz_no' => time(),
             'trans_amount' => '0.01',
             'product_code' => 'TRANS_ACCOUNT_NO_PWD',
             'biz_scene' => 'DIRECT_TRANSFER',
