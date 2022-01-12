@@ -10,13 +10,13 @@ return [
             // 支付宝分配的 app_id
             'app_id' => '',
             // 应用私钥
-            'app_secret_cert' => '',
+            'app_secret_cert' => env('APP_SECRET_CERT', ''),
             // 应用公钥证书 路径
-            'app_public_cert_path' => '',
+            'app_public_cert_path' => '/srv/cert/appCertPublicKey_2021003112619443.crt',
             // 支付宝公钥证书 路径
-            'alipay_public_cert_path' => '',
+            'alipay_public_cert_path' => '/srv/cert/alipayCertPublicKey_RSA2.crt',
             // 支付宝根证书 路径
-            'alipay_root_cert_path' => '',
+            'alipay_root_cert_path' => '/srv/cert/alipayRootCert.crt',
             'return_url' => '',
             'notify_url' => '',
             'mode' => Pay::MODE_NORMAL,
