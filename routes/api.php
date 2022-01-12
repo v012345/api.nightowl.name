@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MainMenuController;
 use App\Http\Controllers\PayController;
+use App\Http\Middleware\VerifySignature;
 use App\Models\MainMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -47,5 +48,5 @@ Route::prefix("v1")->group(function () {
 });
 
 
-Route::post("transfer", [PayController::class, "transfer"]);
+Route::post("transfer", [PayController::class, "transfer"])->middleware(VerifySignature::class);
 Route::post("sign", [PayController::class, "sign"]);
