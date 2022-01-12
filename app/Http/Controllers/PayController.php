@@ -16,7 +16,7 @@ class PayController extends Controller
         $request->sign;
         $secret = env("PAY_SECRET");
         if ($request->sign != hash("sha256", $request->out_biz_no . $request->nonce . $request->trans_amount . $request->payee_info["identity"] . $secret)) {
-            return response("wrong signature", 500);
+            return response("wrong signature", 400);
         } else {
             return 123;
         }
