@@ -14,7 +14,13 @@ class PayController extends Controller
         $request->trans_amount;
         $request->payee_info;
         $request->sign;
-        return [$request->out_biz_no, $request->trans_amount, $request->payee_info, $request->sign];
+        $secret = env("PAY_SECRET");
+        if ($request->sign != hash("sha256", $request->out_biz_no . $request->nonce . $request->trans_amount . $request->payee_info["identity"] . $secret)) {
+            return response("wrong signature", 500);
+        } else {
+            return 123;
+        }
+
         // $result = Pay::alipay()->transfer([
         //     'out_biz_no' => time(),
         //     'trans_amount' => '1.00',
