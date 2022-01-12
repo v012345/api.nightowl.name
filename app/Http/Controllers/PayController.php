@@ -10,6 +10,7 @@ class PayController extends Controller
     //
     public function transfer(Request $request)
     {
+        return 12;
         return Pay::alipay()->transfer([
             'out_biz_no' => $request->out_biz_no,
             'trans_amount' => $request->trans_amount,
