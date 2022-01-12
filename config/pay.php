@@ -51,8 +51,8 @@ return [
         ],
     ],
     'http' => [ // optional
-        'timeout' => 5.0,
-        'connect_timeout' => 5.0,
+        'timeout' => 60.0,
+        'connect_timeout' => 60.0,
         // 更多配置项请参考 [Guzzle](https://guzzle-cn.readthedocs.io/zh_CN/latest/request-options.html)
     ],
     // optional，默认 warning；日志路径为：sys_get_temp_dir().'/logs/yansongda.pay.log'
