@@ -48,3 +48,4 @@ Route::prefix("v1")->group(function () {
 
 
 Route::post("transfer", [PayController::class, "transfer"]);
+Route::post("sign", [PayController::class, "sign"]);
