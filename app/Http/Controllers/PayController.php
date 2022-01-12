@@ -27,6 +27,6 @@ class PayController extends Controller
     public function sign(Request $request)
     {
         $secret = env("PAY_SECRET");
-        return hash("sha256", $request->out_biz_no . $request->nonce . $request->trans_amount . $request->payee_info["identity"] . $secret);
+        return hash("sha256", $request->out_biz_no . $request->trans_amount . $request->payee_info["identity"] . $request->payee_info["name"] . $request->nonce . $secret);
     }
 }
