@@ -49,4 +49,4 @@ Route::prefix("v1")->group(function () {
 
 
 Route::post("transfer", [PayController::class, "transfer"])->middleware(VerifySignature::class);
-// Route::post("sign", [PayController::class, "sign"]);
+Route::post("sign", [PayController::class, "sign"]);
