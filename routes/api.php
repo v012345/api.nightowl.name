@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MainMenuController;
+use App\Http\Controllers\PayController;
 use App\Models\MainMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,3 +45,6 @@ Route::prefix("v1")->group(function () {
         Route::put("main-menus/{mainMenu}", [MainMenuController::class, "update"]);
     });
 });
+
+
+Route::post("transfer", [PayController::class, "transfer"]);
