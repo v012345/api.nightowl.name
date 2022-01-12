@@ -13,6 +13,8 @@ class PayController extends Controller
         $request->out_biz_no;
         $request->trans_amount;
         $request->payee_info;
+        $request->sign;
+        return [$request->out_biz_no, $request->trans_amount, $request->payee_info, $request->sign];
         // $result = Pay::alipay()->transfer([
         //     'out_biz_no' => time(),
         //     'trans_amount' => '1.00',
