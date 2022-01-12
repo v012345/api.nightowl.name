@@ -9,6 +9,6 @@ class PayController extends Controller
     //
     public function transfer(Request $request)
     {
-        return $request->all();
+        return 232;
     }
 }
