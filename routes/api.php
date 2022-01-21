@@ -34,7 +34,7 @@ Route::post("hotfix", function (Request $request) {
 
 
 Route::post('test', function (Request $request) {
-    return $request->all();
+    return 123;
 });
 
 // Route::prefix("v1")->group(function () {
