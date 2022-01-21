@@ -5624,16 +5624,16 @@
         },
         {
             "name": "yansongda/pay",
-            "version": "v3.0.24",
+            "version": "v3.0.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yansongda/pay.git",
-                "reference": "fd921a2b5db63f894743d01f2991ba2f3f9aef0b"
+                "reference": "4388309db85f2b728483b1bbaf3fbbb35544f76a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yansongda/pay/zipball/fd921a2b5db63f894743d01f2991ba2f3f9aef0b",
-                "reference": "fd921a2b5db63f894743d01f2991ba2f3f9aef0b",
+                "url": "https://api.github.com/repos/yansongda/pay/zipball/4388309db85f2b728483b1bbaf3fbbb35544f76a",
+                "reference": "4388309db85f2b728483b1bbaf3fbbb35544f76a",
                 "shasum": ""
             },
             "require": {
@@ -5698,7 +5698,7 @@
                 "issues": "https://github.com/yansongda/pay/issues",
                 "source": "https://github.com/yansongda/pay"
             },
-            "time": "2022-01-09T09:22:22+00:00"
+            "time": "2022-01-21T04:21:06+00:00"
         },
         {
             "name": "yansongda/supports",
@@ -7157,16 +7157,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.11",
+            "version": "9.5.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "2406855036db1102126125537adb1406f7242fdd"
+                "reference": "93d4bf4c37aec6384bb9e5d390d9049a463a7256"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2406855036db1102126125537adb1406f7242fdd",
-                "reference": "2406855036db1102126125537adb1406f7242fdd",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/93d4bf4c37aec6384bb9e5d390d9049a463a7256",
+                "reference": "93d4bf4c37aec6384bb9e5d390d9049a463a7256",
                 "shasum": ""
             },
             "require": {
@@ -7244,7 +7244,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.11"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.12"
             },
             "funding": [
                 {
@@ -7256,7 +7256,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-12-25T07:07:57+00:00"
+            "time": "2022-01-21T05:54:47+00:00"
         },
         {
             "name": "sebastian/cli-parser",

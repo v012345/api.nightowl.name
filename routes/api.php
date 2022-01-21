@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\MainMenuController;
+
 use App\Http\Controllers\PayController;
 use App\Http\Middleware\VerifySignature;
-use App\Models\MainMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,15 +37,14 @@ Route::post('test', function (Request $request) {
     return $request->all();
 });
 
-Route::prefix("v1")->group(function () {
-    Route::prefix("backend")->group(function () {
-        Route::post("main-menus", [MainMenuController::class, "create"]);
-        Route::get("main-menus/{mainMenu?}", [MainMenuController::class, "read"]);
-        Route::delete("main-menus/{mainMenu}", [MainMenuController::class, "delete"]);
-        Route::put("main-menus/{mainMenu}", [MainMenuController::class, "update"]);
-    });
-});
+// Route::prefix("v1")->group(function () {
+//     Route::prefix("backend")->group(function () {
+//         Route::post("main-menus", [MainMenuController::class, "create"]);
+//         Route::get("main-menus/{mainMenu?}", [MainMenuController::class, "read"]);
+//         Route::delete("main-menus/{mainMenu}", [MainMenuController::class, "delete"]);
+//         Route::put("main-menus/{mainMenu}", [MainMenuController::class, "update"]);
+//     });
+// });
 
 
 Route::post("transfer", [PayController::class, "transfer"])->middleware(VerifySignature::class);
-Route::post("sign", [PayController::class, "sign"]);
