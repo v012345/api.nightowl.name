@@ -35,7 +35,7 @@ Route::post("hotfix", function (Request $request) {
 
 Route::get('test', function (Request $request) {
     // return 12345;
-    Test::dispatch(123);
+    Test::dispatch();
 });
 
 // Route::prefix("v1")->group(function () {
