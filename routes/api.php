@@ -34,6 +34,7 @@ Route::post("hotfix", function (Request $request) {
 
 
 Route::post('test', function (Request $request) {
+    return 12345;
     Test::dispatch(123);
 });
 
