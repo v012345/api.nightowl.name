@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Events\Test;
 use App\Http\Controllers\PayController;
 use App\Http\Middleware\VerifySignature;
 use Illuminate\Http\Request;
@@ -34,7 +34,7 @@ Route::post("hotfix", function (Request $request) {
 
 
 Route::post('test', function (Request $request) {
-    return 123;
+    Test::dispatch(123);
 });
 
 // Route::prefix("v1")->group(function () {
