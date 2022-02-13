@@ -49,4 +49,5 @@ Route::get('test', function (Request $request) {
 
 
 Route::post("transfer", [PayController::class, "transfer"])->middleware(VerifySignature::class);
-Route::get("4s/user/{user_id}/paid", [NotifyController::class, "notify4sUser"]);
+Route::get("4s/user/{user_id}/paid", [NotifyController::class, "notify4sUserPaid"]);
+Route::get("4s/user/{user_id}/used", [NotifyController::class, "notify4sUserUsed"]);
