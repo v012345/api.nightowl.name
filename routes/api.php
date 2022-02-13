@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotifyController;
 use App\Http\Controllers\PayController;
 use App\Http\Middleware\VerifySignature;
 use Illuminate\Http\Request;
