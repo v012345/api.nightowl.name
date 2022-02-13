@@ -1,6 +1,5 @@
 <?php
 
-use App\Events\Test;
 use App\Http\Controllers\PayController;
 use App\Http\Middleware\VerifySignature;
 use Illuminate\Http\Request;
@@ -35,7 +34,7 @@ Route::post("hotfix", function (Request $request) {
 
 Route::get('test', function (Request $request) {
     // return 12345;
-    Test::dispatch();
+    // Test::dispatch();
 });
 
 // Route::prefix("v1")->group(function () {
@@ -49,3 +48,4 @@ Route::get('test', function (Request $request) {
 
 
 Route::post("transfer", [PayController::class, "transfer"])->middleware(VerifySignature::class);
+Route::post("4s/user/paid", [NotifyController::class, "notify4sUser"]);

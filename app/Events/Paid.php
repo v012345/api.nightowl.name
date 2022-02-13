@@ -10,18 +10,21 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class Test implements ShouldBroadcast
+class Paid implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public $user_id;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user_id)
     {
         //
+        $this->user_id = $user_id;
     }
 
     /**
@@ -31,7 +34,7 @@ class Test implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('broadcast-test');
+        return new Channel('paid');
     }
     /**
      * Get the data to broadcast.
@@ -40,7 +43,7 @@ class Test implements ShouldBroadcast
      */
     public function broadcastWith()
     {
-        return ['id' => 123];
+        return ['user_id' => $this->user_id];
     }
 
     /**
