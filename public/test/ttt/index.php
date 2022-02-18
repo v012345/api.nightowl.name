@@ -11,7 +11,7 @@
 <body>
     <h1>index.php</h1>
     <?php
-    echo 123;
+    print_r($_SERVER);
     ?>
 </body>
 
