@@ -19,10 +19,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('test/ttt/dd //////', function () {
+Route::get('test/ttt/dd//////', function () {
     return view('welcome');
 });
-Route::get('test/ttt/dd //8', function () {
+Route::get('test/ttt/dd//8', function () {
     return view('welcome');
 });
 
