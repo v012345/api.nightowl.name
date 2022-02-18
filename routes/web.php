@@ -18,6 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('test/ttt/dd //////', function () {
+    return view('welcome');
+});
+
 Route::get("migrate", function (Request $request) {
     echo shell_exec("bash " . base_path() . "/scripts/migrate.sh " . base_path() . "/artisan");
 });
