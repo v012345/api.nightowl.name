@@ -53,5 +53,5 @@ Route::get("4s/user/{user_id}/paid", [NotifyController::class, "notify4sUserPaid
 Route::get("4s/user/{user_id}/used", [NotifyController::class, "notify4sUserUsed"]);
 
 Route::post("user/login", function () {
-    return "Ok";
+    return array("id" => 1, "name" => "nightowl");
 });
